@@ -1,3 +1,28 @@
 [gd_scene format=2]
 
-[node name="Spatial" type="Spatial"]
+[node name="CSGCombiner" type="CSGCombiner"]
+
+[node name="Floor" type="CSGBox" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+width = 42.0
+depth = 42.0
+
+[node name="CSGBox" type="CSGBox" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -22 )
+width = 42.0
+height = 6.0
+
+[node name="CSGBox2" type="CSGBox" parent="."]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -22, 3, 5.96046e-08 )
+width = 42.0
+height = 6.0
+
+[node name="CSGBox3" type="CSGBox" parent="."]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.90735e-06, 3, 22 )
+width = 42.0
+height = 6.0
+
+[node name="CSGBox4" type="CSGBox" parent="."]
+transform = Transform( 1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 22, 3, -1.90735e-06 )
+width = 42.0
+height = 6.0

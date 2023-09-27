@@ -1,3 +1,15 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
 
-[node name="PlayerRoot" type="Spatial"]
+[sub_resource type="CapsuleShape" id=1]
+height = 2.0
+
+[node name="Player" type="KinematicBody"]
+
+[node name="Collision" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2, 0 )
+shape = SubResource( 1 )
+
+[node name="Head" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
+
+[node name="Camera" type="Camera" parent="Head"]
