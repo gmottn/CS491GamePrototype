@@ -2,42 +2,57 @@ extends KinematicBody
 
 # Player class, Ahmed Faisal september 27th
 
+var speed = 20
+var acceleration = 20
+var gravity = 9.8
+var jump = 5
 
-onready var camera = $Head/Camera
+var mouse_sensitivity = 0.05;
 
-var gravity = -30
-export var max_speed = 8
-export var mouse_sensitivity = 0.002  # radians/pixel
-
+var direction = Vector3()
 var velocity = Vector3()
+var fall = Vector3()
 
-func mouse_input(event):
-	pass
+onready var head = $Head
 
-func get_input(delta):
-	var input_dir = Vector3()
+func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
+
+func _input(event):
+	if event is InputEventMouseMotion:
+		rotate_y(deg2rad(-event.relative.x * mouse_sensitivity))
+		head.rotate_x(deg2rad(-event.relative.y * mouse_sensitivity))
+		
+		head.rotation.x = clamp(head.rotation.x, deg2rad(-85),deg2rad(70))
+		
+
+func _process(delta):
+	
+	direction = Vector3()
+	
+	if not is_on_floor():
+		fall.y -= gravity * delta
+	
+	if Input.is_action_pressed("player_jump"):
+		fall.y = jump
+	
+	if Input.is_action_just_pressed("ui_cancel"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
 	if Input.is_action_pressed("player_up"):
-		input_dir += -global_transform.basis.z * delta
-	if Input.is_action_pressed("player_down"):
-		input_dir += global_transform.basis.z * delta
+		direction -= transform.basis.z
+	elif Input.is_action_pressed("player_down"):
+		direction += transform.basis.z
+
 	if Input.is_action_pressed("player_left"):
-		input_dir += -global_transform.basis.x * delta
-	if Input.is_action_pressed("player_right"):
-		input_dir += global_transform.basis.x * delta
+		direction -= transform.basis.x
+	elif Input.is_action_pressed("player_right"):
+		direction += transform.basis.x
 	
-	input_dir = input_dir.normalized()
-	return input_dir
-
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
-	velocity = get_input(delta)
+	direction = direction.normalized()
+	velocity = velocity.linear_interpolate(direction * speed, acceleration * delta)
 	
+	velocity = move_and_slide(velocity,Vector3.UP)
 	
+	move_and_slide(fall,Vector3.UP)
