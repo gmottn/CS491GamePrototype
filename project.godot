@@ -23,6 +23,9 @@ common/drop_mouse_on_gui_input_disabled=true
 texture={
 "flags/filter": false
 }
+texture_3d={
+"flags/filter": false
+}
 
 [input]
 
