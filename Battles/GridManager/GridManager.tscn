@@ -3,7 +3,7 @@
 [ext_resource path="res://Battles/GridManager/GridManager.gd" type="Script" id=1]
 [ext_resource path="res://Battles/GridManager/GridSprites/sPlaceHolderGridAlternative.PNG" type="Texture" id=2]
 [ext_resource path="res://Battles/GridManager/GridSprites/sPlaceHolderGrid.PNG" type="Texture" id=3]
-[ext_resource path="res://BattleCamera.gd" type="Script" id=4]
+[ext_resource path="res://Battles/BattleCamera.gd" type="Script" id=4]
 [ext_resource path="res://Battles/GridManager/GridSprites/sPlaceHolderBattleFiller.PNG" type="Texture" id=5]
 
 [node name="GridManager" type="Node2D"]

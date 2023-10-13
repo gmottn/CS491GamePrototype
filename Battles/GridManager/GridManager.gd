@@ -78,10 +78,13 @@ func create_GridSlot(entity,x,y,type):
 	slotInstance.z_index = 2
 	slotInstance.type = type
 	
-	#if(type == "hero"):
-		#heroGrid[x][y] = slotInstance
-	#else:
-		#enemyGrid[x][y] = slotInstance
+	if(type == "hero"):
+		
+		heroGrid[y][x] = slotInstance
+	else:
+		print("instance placed at")
+		print(y," " x)
+		enemyGrid[y][x] = slotInstance
 	add_child(slotInstance)
 #changes the sprite based on its placement on the board... should alternate so that the grid is clearly viible
 func change_sprite(x,y,slotSprite):
