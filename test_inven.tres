@@ -1,0 +1,28 @@
+[gd_resource type="Resource" load_steps=8 format=2]
+
+[ext_resource path="res://Scripts/Inventory/InventoryData.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Inventory/SlotData.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/Item/Items/Potion.tres" type="Resource" id=3]
+[ext_resource path="res://Scripts/Item/Items/Axe.tres" type="Resource" id=4]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 2 )
+max_stack_size = 99
+item_data = ExtResource( 3 )
+stack_size = 1
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 2 )
+max_stack_size = 99
+item_data = ExtResource( 3 )
+stack_size = 10
+
+[sub_resource type="Resource" id=3]
+script = ExtResource( 2 )
+max_stack_size = 99
+item_data = ExtResource( 4 )
+stack_size = 1
+
+[resource]
+script = ExtResource( 1 )
+Data = [ SubResource( 1 ), SubResource( 2 ), null, null, null, SubResource( 3 ), null, null, null, null, null, null, null, null, null, null, null, null ]

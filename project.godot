@@ -8,6 +8,28 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Resource",
+"class": "InventoryData",
+"language": "GDScript",
+"path": "res://Scripts/Inventory/InventoryData.gd"
+}, {
+"base": "Resource",
+"class": "ItemData",
+"language": "GDScript",
+"path": "res://Scripts/Item/ItemData.gd"
+}, {
+"base": "Resource",
+"class": "SlotData",
+"language": "GDScript",
+"path": "res://Scripts/Inventory/SlotData.gd"
+} ]
+_global_script_class_icons={
+"InventoryData": "",
+"ItemData": "",
+"SlotData": ""
+}
+
 [application]
 
 config/name="CS491Game"
