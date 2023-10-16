@@ -11,11 +11,7 @@ config_version=4
 [application]
 
 config/name="CS491Game"
-
 run/main_scene="res://Levels/Dungeon_Main.tscn"
-
-
-
 config/icon="res://icon.png"
 
 [display]
