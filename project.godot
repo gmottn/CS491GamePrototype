@@ -33,9 +33,7 @@ _global_script_class_icons={
 [application]
 
 config/name="CS491Game"
-
 run/main_scene="res://Levels/Dungeon_Main.tscn"
-
 config/icon="res://icon.png"
 
 [display]
