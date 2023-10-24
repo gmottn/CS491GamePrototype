@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/Item/ItemData.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Textures/Shikashi's Fantasy Icons Pack v2/#2 - Transparent Icons & Drop Shadow.png" type="Texture" id=2]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 128, 288, 32, 32 )
+
+[resource]
+script = ExtResource( 1 )
+name = "Potion"
+description = [ "Heals Health by 25" ]
+stackable = true
+texture = SubResource( 1 )
