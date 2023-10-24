@@ -16,6 +16,7 @@ var tileStartY = tileSize/2
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	print("READY")
 	var grids = get_grids()
 	$GridManager.enemyGrid = grids[1]
 	$GridManager.heroGrid = grids[0]
@@ -29,7 +30,7 @@ func _ready():
 #gets the grids based on the battle_id
 func get_grids():
 	var grids = $BattleDatabase.get_battle(battleID)
-	assert(grids,"Invalid ID")
+	assert(grids,"Invalid battle ID")
 	return grids
 #builds the background floor of the battle
 func build_background():

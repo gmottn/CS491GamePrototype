@@ -9,6 +9,15 @@
 config_version=4
 
 _global_script_classes=[ {
+
+"base": "Node",
+"class": "GridSlot",
+"language": "GDScript",
+"path": "res://Battles/GridManager/GridSlot.gd"
+} ]
+_global_script_class_icons={
+"GridSlot": ""
+
 "base": "Resource",
 "class": "InventoryData",
 "language": "GDScript",
@@ -28,21 +37,16 @@ _global_script_class_icons={
 "InventoryData": "",
 "ItemData": "",
 "SlotData": ""
+
 }
 
 [application]
 
 config/name="CS491Game"
+
 run/main_scene="res://Levels/Dungeon_Main.tscn"
+
 config/icon="res://icon.png"
-
-[display]
-
-window/stretch/mode="2d"
-
-[gui]
-
-common/drop_mouse_on_gui_input_disabled=true
 
 [importer_defaults]
 
@@ -111,10 +115,10 @@ interact={
  ]
 }
 
+
 [physics]
 
 common/enable_pause_aware_picking=true
-3d/physics_engine="GodotPhysics"
 
 [rendering]
 
