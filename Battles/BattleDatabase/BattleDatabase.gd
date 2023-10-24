@@ -6,15 +6,16 @@ extends Node
 var battles = {
 	1: [ # test battle
 		[
+			[0,0,0,0,0],
+			[0,0,0,0,0],
 			[0,0,0,0,0]
 			
 		],
 		[
-			[0,0,"TestMonster",0,0,0],
-			[0,0,0,0,0],
-			[0,0,2,0,0],
-			[0,0,0,0,0],
+			["TestMonster","TestMonster","TestMonster",0,0],
+			["TestMonster","TestMonster","TestMonster",0,0],
 			[0,0,0,0,0]
+			
 		]
 	],
 	2:[ # test battle

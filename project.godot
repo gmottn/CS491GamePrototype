@@ -8,11 +8,22 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node",
+"class": "GridSlot",
+"language": "GDScript",
+"path": "res://Battles/GridManager/GridSlot.gd"
+} ]
+_global_script_class_icons={
+"GridSlot": ""
+}
+
 [application]
 
 config/name="CS491Game"
 run/main_scene="res://Battles/BattleScreen/BattleScreen.tscn"
 config/icon="res://icon.png"
+<<<<<<<HEADrun/main_scene="res://Battles/BattleScreen/BattleScreen.tscn"
 
 [display]
 
