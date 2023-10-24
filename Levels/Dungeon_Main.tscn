@@ -1,12 +1,11 @@
 
-
 [gd_scene load_steps=19 format=2]
-
 
 [ext_resource path="res://Assets/Meshes/level_geo.tres" type="MeshLibrary" id=1]
 [ext_resource path="res://Entities/PlayerScn.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Levels/DungeonEnv.tres" type="Environment" id=3]
-[ext_resource path="res://Scripts/LevelGenerator.gd" type="Script" id=4]
+
+[ext_resource path="res://Scripts/LevelGenerator.gd" type="Script" id=15]
 
 [ext_resource path="res://Levels/Inventory.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scripts/Dungeon_Main.gd" type="Script" id=5]
@@ -59,8 +58,6 @@ enabled = true
 cast_to = Vector3( 0, 0, -20 )
 collision_mask = 4
 
-
-
 [node name="GridMap" type="GridMap" parent="."]
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -22, 0 )
 visible = false
@@ -105,7 +102,6 @@ omni_range = 12.229
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 3 )
-
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
