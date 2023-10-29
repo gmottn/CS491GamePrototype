@@ -1,6 +1,6 @@
 extends Node
 class_name GridSlot
-
+var gridManager = null
 var battleManager = null
 var battleEntityScene = preload("res://Battles/BattleEntities/BattleEntity.tscn")
 var sprite = null #which sprite for it to display
@@ -18,7 +18,7 @@ func _ready():
 	
 	battleManager = get_tree().get_root().find_node("BattleManager",true,false)
 	battleManager.connect("state_changed",self,"_on_state_changed_triggered")
-	
+	gridManager = get_tree().get_root().find_node("GridManager",true,false)
 	#set_sprite()
 	#create_entity()
 
@@ -63,6 +63,12 @@ func perform_damage(attack):
 		var damage = attack.damage
 		var statusEffects = attack.statusEffects
 		entity.take_damage(damage,statusEffects)
+	if (attack.knockback[0] != 0 or attack.knockback[1] != 0) and entity != null:
+		var newLocation = [location[0] + attack.knockback[0],location[1] + attack.knockback[1]]
+		
+		var newSlot= gridManager.get_slot(newLocation,affiliation)
+		gridManager.transfer_entity(self,newSlot)
+	
 func _on_state_changed_triggered(newState,oldState):
 	
 	if(newState != "SlotSelected" and newState != "Targeting"):

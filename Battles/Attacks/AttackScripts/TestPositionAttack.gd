@@ -40,7 +40,8 @@ func initialize_attack():
 	caster = get_parent()
 	attackClickable = attackClickableScene.instance()
 	attackClickable.distanceMult = attackClickableNumber
-	add_child(attackClickable)
+	attackClickable.attack = self
+	gridManager.get_node("UI_Layer/Panel").add_child(attackClickable)
 	
 	affiliation = caster.affiliation
 	if affiliation == "hero":

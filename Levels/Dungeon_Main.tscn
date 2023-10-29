@@ -1,12 +1,8 @@
-
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Assets/Meshes/level_geo.tres" type="MeshLibrary" id=1]
 [ext_resource path="res://Entities/PlayerScn.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Levels/DungeonEnv.tres" type="Environment" id=3]
-
-[ext_resource path="res://Scripts/LevelGenerator.gd" type="Script" id=15]
-
 [ext_resource path="res://Levels/Inventory.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scripts/Dungeon_Main.gd" type="Script" id=5]
 [ext_resource path="res://Inventory/test_inven.tres" type="Resource" id=6]
@@ -18,6 +14,8 @@
 [ext_resource path="res://Item/Items/Axe.tres" type="Resource" id=12]
 [ext_resource path="res://Item/Items/Potion.tres" type="Resource" id=13]
 [ext_resource path="res://Item/Pickup.tscn" type="PackedScene" id=14]
+[ext_resource path="res://OverworldEnemy.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Billboard.tscn" type="PackedScene" id=16]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 11 )
@@ -42,21 +40,20 @@ item_data = ExtResource( 13 )
 stack_size = 1
 
 [node name="Spatial" type="Spatial"]
-
 script = ExtResource( 5 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5, 2, -4 )
 inventory_data = ExtResource( 6 )
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource( 3 )
-
 [node name="RayCast" type="RayCast" parent="Player"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.878238, 0 )
 enabled = true
 cast_to = Vector3( 0, 0, -20 )
 collision_mask = 4
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 3 )
 
 [node name="GridMap" type="GridMap" parent="."]
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -22, 0 )
@@ -86,14 +83,13 @@ omni_range = 5.915
 [node name="OmniLight2" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 4, -1 )
 
-[node name="OmniLight3" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, 4, -2 )
-light_energy = 0.677
-omni_range = 12.229
-
 [node name="OmniLight4" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 4, -1 )
 
+[node name="OmniLight3" type="OmniLight" parent="OmniLight4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -1 )
+light_energy = 0.677
+omni_range = 12.229
 
 [node name="OmniLight5" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 4, 35 )
@@ -134,11 +130,16 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.057, 1.58069, -3.38225 )
 inventory_data = SubResource( 3 )
 
 [node name="Pickup" parent="." instance=ExtResource( 14 )]
-transform = Transform( -0.0463917, 0, -0.998923, 0, 1, 0, 0.998923, 0, -0.0463917, 13.1511, 5.47274, -6.52398 )
+transform = Transform( -0.0463917, 0, -0.998923, 0, 1, 0, 0.998923, 0, -0.0463917, 13.1511, 5.47274, -2.05807 )
 slot_data = SubResource( 4 )
+
+[node name="Enemy" parent="." instance=ExtResource( 15 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24.7232, 4.27617, 34.4212 )
+
+[node name="BillBoard" parent="." instance=ExtResource( 16 )]
+transform = Transform( 1, 0, 0, 0, -0.00469496, -0.999989, 0, 0.999989, -0.00469496, 29.7454, 5.2933, -3.03449 )
 
 [connection signal="drop_slot_data" from="CanvasLayer/Interface" to="." method="_on_Interface_drop_slot_data"]
 [connection signal="drop_slot_data" from="CanvasLayer/Interface" to="CanvasLayer/Interface" method="_on_Interface_drop_slot_data"]
 [connection signal="gui_input" from="CanvasLayer/Interface" to="CanvasLayer/Interface" method="_on_Interface_gui_input"]
 [connection signal="visibility_changed" from="CanvasLayer/Interface" to="CanvasLayer/Interface" method="_on_Interface_visibility_changed"]
-

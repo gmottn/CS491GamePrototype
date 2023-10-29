@@ -13,11 +13,12 @@ extends "res://Battles/Attacks/AttackScripts/AttackBase.gd"
 func _ready():
 	#define these per attack
 	targetSpots = []
-	splashSpots = [[-1,0],[0,1]]
-	damage = 50 # base damage
+	splashSpots = []
+	damage = 50# base damage
 	statusEffects = []
 	splashDegredation = 0.8
-	maxDepth = 2
+	maxDepth = 1
+	knockback = [-1,0]
 	
 	#leave these alone
 	gridManager = get_tree().get_root().find_node("GridManager",true,false)
@@ -45,6 +46,7 @@ func initialize_attack():
 	
 	affiliation = caster.affiliation
 	if affiliation == "hero":
+		knockback[0] *= -1
 		for spots in splashSpots:
 			print("added")
 			spots[0] *= -1

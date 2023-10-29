@@ -1,11 +1,12 @@
-extends Node2D
+extends Button
 
 var battleManager = null
-var basePositionX = position.x - 20
-var basePositionY = position.y + 10
+var basePositionX = rect_position.x - 10
+var basePositionY = rect_position.y + 100
 var basePosition = Vector2(basePositionX,basePositionY)
-var distanceBetween = 10
+var distanceBetween = (86 * 2)
 var distanceMult = 1
+var attack = null
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -14,19 +15,17 @@ var distanceMult = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	text = attack.get_script().resource_path.get_file().get_basename()
+	rect_size.x = 86
+	rect_size.y = 34
 	battleManager = get_tree().get_root().find_node("BattleManager",true,false)
 	battleManager.connect("state_changed",self,"_on_state_changed_triggered")
 	print("Attack Clickable created At")
 	var offset = Vector2(distanceMult * distanceBetween,0)
-	position = basePosition + offset
-	print(position)
+	rect_position = basePosition + offset
+	print(rect_position)
 	
-func _on_Area2D_input_event(viewport, event, shape_idx):
-	if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT and battleManager.gameState == "SlotSelected":
-		print("Selected Attack...")
-		print(distanceMult)
-		battleManager.changeState("Targeting")
-		get_parent().update_depth(1)
+
 		
 func _on_state_changed_triggered(newState,oldState):
 	if(newState == "Hero"):
@@ -37,13 +36,21 @@ func _on_state_changed_triggered(newState,oldState):
 #	pass
 
 
-func _on_Area2D_mouse_entered():
-	get_parent().target_code()
 
 
+func _on_Button_mouse_entered():
+	if battleManager.gameState == "SlotSelected":
+		attack.target_code()
 
-func _on_Area2D_mouse_exited():
+
+func _on_Button_mouse_exited():
 	if(battleManager.gameState != "Targeting"):
-		get_parent().target_removal_code()
+		attack.target_removal_code()
 
 
+func _on_Button_pressed():
+	if battleManager.gameState == "SlotSelected":
+		print("Selected Attack...")
+		print(distanceMult)
+		battleManager.changeState("Targeting")
+		attack.update_depth(1)
