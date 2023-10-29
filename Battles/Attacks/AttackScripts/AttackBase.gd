@@ -14,6 +14,7 @@ var maxDepth = 0 # edit
 var depth = 0
 var attackClickable = null
 var attackClickableNumber = 1
+var knockback = [0,0]
 
 
 
@@ -46,17 +47,29 @@ func create_targets(targetSlots):
 	targets = gridManager.create_targets(targetSlots,self,targetType,1)
 
 		
-func set_position_dependent_targets():
+func set_position_dependent_targets(opposing = true):
 	var location = caster.gridSlot.location
 	var newSpots = []
 	for spot in targetSpots:
-		var slot = get_opposing_grid_slot([spot[0] + location[0],spot[1] + location[1]])
+		var slot = null
+		if(opposing):
+			slot = get_opposing_grid_slot([spot[0] + location[0],spot[1] + location[1]])
+		else:
+			slot = get_my_grid_slot([spot[0] + location[0],spot[1] + location[1]])
 		if slot != null:
 			newSpots.append(slot)
 	create_targets(newSpots)
-		
-		
-	
+func set_specific_targets(opposing = true):
+	var newSpots = []
+	var slot = null 
+	for spot in targetSpots:
+		if(opposing):
+			slot = get_opposing_grid_slot(spot)
+		else:
+			slot = get_my_grid_slot(spot)
+		if slot != null:
+			newSpots.append(slot)
+	create_targets(newSpots)
 func target_code():
 	set_position_dependent_targets()
 func target_removal_code():
@@ -87,6 +100,7 @@ func perform_attack():
 	for target in targets:
 		target.perform_attack()
 	battleManager.changeState("Hero")
+	print("I Changd It")
 func get_opposing_grid_slot(slotLocation):
 	if(affiliation == "Hero"):
 		return gridManager.get_slot(slotLocation,"Enemy")
@@ -94,3 +108,16 @@ func get_opposing_grid_slot(slotLocation):
 		return gridManager.get_slot(slotLocation,"Hero")
 func get_my_grid_slot(slotLocation):
 	return gridManager.get_slot(slotLocation,affiliation)
+func initialize_attack():
+	caster = get_parent()
+	attackClickable = attackClickableScene.instance()
+	attackClickable.distanceMult = attackClickableNumber
+	attackClickable.attack = self
+	gridManager.get_node("UI_Layer/Panel").add_child(attackClickable)
+	
+	affiliation = caster.affiliation
+	if affiliation == "hero":
+		knockback *= -1
+		for spots in splashSpots:
+			print("added")
+			spots[0] *= -1

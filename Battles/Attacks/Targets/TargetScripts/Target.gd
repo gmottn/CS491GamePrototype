@@ -48,7 +48,9 @@ func get_opposing_slot(location):
 	else:
 		return gridManager.get_slot(location,"hero")
 func get_my_slot(location):
-	return gridManager.getSlot(location,attack.affiliation)
+	print(attack.affiliation)
+	
+	return gridManager.get_slot(location,attack.affiliation)
 func remove_splash_targets():
 	for target in splashTargets:
 		target.delete_self()

@@ -8,13 +8,13 @@ var battles = {
 		[
 			[0,0,0,0,0],
 			[0,0,0,0,0],
-			[0,0,0,0,0]
+			[1,0,0,0,0]
 			
 		],
 		[
-			["TestMonster","TestMonster","TestMonster",0,0],
-			["TestMonster","TestMonster","TestMonster",0,0],
-			[0,0,0,0,0]
+			["TestMonster",0,0,0,"TestMonster"],
+			[0,0,"TestMonster",0,0],
+			["TestMonster",0,0,0,"TestMonster"]
 			
 		]
 	],

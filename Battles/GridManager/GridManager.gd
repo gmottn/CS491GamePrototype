@@ -211,7 +211,7 @@ func get_all_slots(chosenGrid):
 				returnSlots.append(slot)
 	return returnSlots
 func create_targets(targetSpots,attack,targetType,depth):
-	
+	print("TARGET WAS CREATED")
 	var targets = []
 	for slot in targetSpots:
 		var targetInstance = targetScene.instance()
@@ -224,9 +224,25 @@ func create_targets(targetSpots,attack,targetType,depth):
 		targetInstance.depth = depth
 		slot.add_child(targetInstance)
 		targets.append(targetInstance)
-
-		
+	return targets
+func create_chain_targets(targetSpot,attack,targetSlots,depth,baseTarget, orientation = null):
 	
+	var targets = []
+	var targetType = "Chain"
+	var slot = targetSpot
+
+	var targetInstance = targetScene.instance()
+	if(targetType != ""):
+		var targetScript = load("res://Battles/Attacks/Targets/TargetScripts/" + targetType + "Target.gd")
+		targetInstance.script = targetScript
+	targetInstance.attack = attack
+	targetInstance.gridSlot = slot
+	targetInstance.depth = depth
+	targetInstance.targetSlots = targetSlots
+	targetInstance.baseTarget= baseTarget
+	targetInstance.orientation = orientation
+	slot.add_child(targetInstance)
+	targets.append(targetInstance)
 	return targets
 func get_slot(slotLocation,gridType):
 	
@@ -236,8 +252,21 @@ func get_slot(slotLocation,gridType):
 	else: #gridType == "enemy"
 		chosenGrid = enemyGrid
 	if(slotLocation[0] >= get_grid_width(chosenGrid) or slotLocation[0] < 0 or slotLocation[1] >= get_grid_height(chosenGrid) or  slotLocation[1] < 0):
+		print("CHECKDATA")
+		print(get_grid_width(chosenGrid))
+		print(get_grid_height(chosenGrid))
+		
 		return null
+	print("Successful return")
+	print(chosenGrid[slotLocation[1]][slotLocation[0]])
 	return chosenGrid[slotLocation[1]][slotLocation[0]]
 
-	
+func transfer_entity(start,end):
+	var entity = start.entity
+	start.remove_child(entity)
+	start.entity = null
+	entity.gridSlot = end
+	end.add_child(entity)
+	end.entity = entity
+		
 	
