@@ -24,8 +24,8 @@ func _generatemap():
 	for x in range(-12,12):
 		for y in range(-12,12):
 			$GridMap.set_cell_item(x, -1, y, 0)
-			$GridMap.set_cell_item(x, 0, y, 0)
-			$GridMap.set_cell_item(x, 1, y, 0)
+			$GridMap.set_cell_item(x, 0, y, 1)
+			#$GridMap.set_cell_item(x, 1, y, 0)
 	
 	for i in range(0,grid_steps):
 		var temp_dir = dir.duplicate()
@@ -42,9 +42,9 @@ func _generatemap():
 		
 		
 		
-		$GridMap.set_cell_item(current_pos.x, -1, current_pos.y, 2)
+		$GridMap.set_cell_item(current_pos.x, -1, current_pos.y, 0)
 		$GridMap.set_cell_item(current_pos.x, 0, current_pos.y, -1)
-		$GridMap.set_cell_item(current_pos.x, 1, current_pos.y, 2)
+		#$GridMap.set_cell_item(current_pos.x, 1, current_pos.y, 2)
 		
 	
 
