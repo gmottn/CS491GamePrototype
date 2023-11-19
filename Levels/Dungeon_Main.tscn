@@ -65,6 +65,7 @@ __meta__ = {
 
 [node name="GridMap2" type="GridMap" parent="."]
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
+visible = false
 mesh_library = ExtResource( 1 )
 cell_size = Vector3( 1, 1, 1 )
 cell_octant_size = 4
