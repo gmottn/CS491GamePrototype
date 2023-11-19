@@ -1,6 +1,13 @@
 extends KinematicBody
 
+signal toggle_inventory
+
+export var inventory_data : Resource
+onready var ray_cast = $RayCast
+onready var camera : Camera = $Head/Camera
+
 # Player class, Ahmed Faisal september 27th
+
 
 var speed = 20
 var acceleration = 20
@@ -26,7 +33,7 @@ func _input(event):
 		
 		head.rotation.x = clamp(head.rotation.x, deg2rad(-85),deg2rad(70))
 		
-
+	
 func _process(delta):
 	
 	direction = Vector3()
@@ -56,3 +63,16 @@ func _process(delta):
 	velocity = move_and_slide(velocity,Vector3.UP)
 	
 	move_and_slide(fall,Vector3.UP)
+	
+	if Input.is_action_just_pressed("inventory"):
+		emit_signal("toggle_inventory")
+	if Input.is_action_just_pressed("interact"):
+		interact()
+		
+func interact() -> void:
+	if ray_cast.is_colliding():
+		ray_cast.get_collider().player_interact()
+	
+func get_drop_position() -> Vector3:
+	var direction = -camera.global_transform.basis.z
+	return camera.global_transform.origin + direction

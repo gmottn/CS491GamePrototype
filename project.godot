@@ -8,10 +8,33 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Resource",
+"class": "InventoryData",
+"language": "GDScript",
+"path": "res://Scripts/InventoryData.gd"
+}, {
+"base": "Resource",
+"class": "ItemData",
+"language": "GDScript",
+"path": "res://Item/ItemData.gd"
+}, {
+"base": "Resource",
+"class": "SlotData",
+"language": "GDScript",
+"path": "res://Inventory/SlotData.gd"
+} ]
+_global_script_class_icons={
+"InventoryData": "",
+"ItemData": "",
+"SlotData": ""
+}
+
 [application]
 
 config/name="CS491Game"
 run/main_scene="res://Levels/Dungeon_Main.tscn"
+
 config/icon="res://icon.png"
 
 [display]
@@ -76,6 +99,16 @@ player_right={
 player_jump={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+inventory={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":73,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+interact={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 
