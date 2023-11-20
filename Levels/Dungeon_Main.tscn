@@ -52,9 +52,6 @@ enabled = true
 cast_to = Vector3( 0, 0, -20 )
 collision_mask = 4
 
-[node name="WorldEnvironment2" type="WorldEnvironment" parent="."]
-environment = ExtResource( 3 )
-
 [node name="GridMap" type="GridMap" parent="."]
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -22, 0 )
 mesh_library = ExtResource( 1 )

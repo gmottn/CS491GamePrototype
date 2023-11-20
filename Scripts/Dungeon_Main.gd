@@ -12,7 +12,6 @@ const dir = [Vector2.RIGHT, Vector2.LEFT, Vector2.UP, Vector2.DOWN]
 var grid_size = 10
 var grid_steps = 100
 
-
 func _generatemap():
 	randomize()
 	
@@ -40,13 +39,25 @@ func _generatemap():
 		current_pos += d
 		last_dir = d
 		
-		
-		
 		$GridMap.set_cell_item(current_pos.x, -1, current_pos.y, 0)
 		$GridMap.set_cell_item(current_pos.x, 0, current_pos.y, -1)
 		#$GridMap.set_cell_item(current_pos.x, 1, current_pos.y, 2)
 		
-	
+	for x1 in range (-12,12):
+		for y1 in range(-12,12):
+			#get cell item setup: get_cell_item(xPos,Level,yPos)
+			#First, we check if the cell is unoccupied,
+			#Then, we check if two sides of it are filled
+			#If so, we add a doorway
+			if ($GridMap.get_cell_item(x1, 0, y1) == -1): 
+				if ($GridMap.get_cell_item(x1+1, 0, y1) == 1) and ($GridMap.get_cell_item(x1-1, 0, y1) == 1): 
+					$GridMap.set_cell_item(x1, 0, y1, 2)
+				if ($GridMap.get_cell_item(x1, 0, y1+1) == 1) and ($GridMap.get_cell_item(x1, 0, y1-1) == 1): 
+					$GridMap.set_cell_item(x1, 0, y1, 2,16)
+				add_child(light)
+				light.translation(x1,y1,0);
+			
+		
 
 func _ready() ->void:
 	_generatemap()
