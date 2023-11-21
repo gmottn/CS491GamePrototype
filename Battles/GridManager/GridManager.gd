@@ -179,7 +179,7 @@ func get_valid_spawn_points():
 		
 func get_party():
 	#TODO database implementation
-	return ["MainHero"]
+	return ["MainHero",""]
 func get_largest_row():
 	var heroRowSize = get_grid_width(heroGrid);
 	var enemyRowSize = get_grid_width(enemyGrid);
@@ -189,7 +189,7 @@ func get_largest_row():
 		return enemyRowSize
 func get_largest_column():
 	var heroColumnSize = get_grid_height(heroGrid);
-	var enemyColumnSize = get_grid_height(enemyGrid);
+	var enemyColumnSize = get_grid_height(enemyGrid.duplicate());
 	if(heroColumnSize > enemyColumnSize):
 		return heroColumnSize
 	else:
@@ -212,8 +212,12 @@ func get_all_slots(chosenGrid):
 	return returnSlots
 func create_targets(targetSpots,attack,targetType,depth):
 	print("TARGET WAS CREATED")
+	if(targetType == "Unselectable"):
+		print("yes")
 	var targets = []
+	var num = 0
 	for slot in targetSpots:
+		num +=1;
 		var targetInstance = targetScene.instance()
 		if(targetType != ""):
 			var targetScript = load("res://Battles/Attacks/Targets/TargetScripts/" + targetType + "Target.gd")
@@ -222,6 +226,7 @@ func create_targets(targetSpots,attack,targetType,depth):
 		targetInstance.gridSlot = slot
 		targetInstance.type = targetType
 		targetInstance.depth = depth
+		targetInstance.number = num
 		slot.add_child(targetInstance)
 		targets.append(targetInstance)
 	return targets
@@ -246,11 +251,8 @@ func create_chain_targets(targetSpot,attack,targetSlots,depth,baseTarget, orient
 	return targets
 func get_slot(slotLocation,gridType):
 	
-	var chosenGrid = null
-	if gridType == "hero":
-		chosenGrid = heroGrid
-	else: #gridType == "enemy"
-		chosenGrid = enemyGrid
+	var chosenGrid = get_grid(gridType)
+	
 	if(slotLocation[0] >= get_grid_width(chosenGrid) or slotLocation[0] < 0 or slotLocation[1] >= get_grid_height(chosenGrid) or  slotLocation[1] < 0):
 		print("CHECKDATA")
 		print(get_grid_width(chosenGrid))
@@ -268,5 +270,28 @@ func transfer_entity(start,end):
 	entity.gridSlot = end
 	end.add_child(entity)
 	end.entity = entity
-		
+func validateLocationX(X,gridType):
+	var width = get_grid_width(get_grid(gridType))
+	if (X > width):
+		return width
+	elif (X < 0):
+		return 0
+	else:
+		return X
+func validateLocationY(Y,gridType):
+	var height = get_grid_height(get_grid(gridType))
+	if (Y > height):
+		return height
+	elif (Y < 0):
+		return 0
+	else:
+		return Y
+func get_grid(gridType):
+	if gridType == "hero":
+		return heroGrid
+	else: #gridType == "enemy"
+		return enemyGrid
+
 	
+
+

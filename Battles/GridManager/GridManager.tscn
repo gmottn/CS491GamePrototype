@@ -1,8 +1,29 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Battles/GridManager/GridManager.gd" type="Script" id=1]
+[ext_resource path="res://Fonts/sepura-font/Sepura-K7z9A.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Fonts/sepura-font/misc/Sepura-7c10.woff" type="DynamicFontData" id=3]
 [ext_resource path="res://Battles/BattleCamera.gd" type="Script" id=4]
 [ext_resource path="res://Battles/GridManager/GridSprites/sPlaceHolderBattleFiller.PNG" type="Texture" id=5]
+[ext_resource path="res://Battles/BattleEntities/EntitySprites/Portraits/blank-profile-picture-973460_1280-705x705.png" type="Texture" id=6]
+[ext_resource path="res://Battles/GridManager/Panel.gd" type="Script" id=7]
+[ext_resource path="res://Battles/GridManager/AttacksPanel.gd" type="Script" id=8]
+[ext_resource path="res://Battles/Attacks/AttackClickable/AttackClickable.tscn" type="PackedScene" id=9]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 22
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 32
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=5]
+font_data = ExtResource( 3 )
 
 [node name="GridManager" type="Node2D"]
 script = ExtResource( 1 )
@@ -20,5 +41,141 @@ texture = ExtResource( 5 )
 layer = -4
 
 [node name="Panel" type="Panel" parent="UI_Layer"]
-margin_right = 1040.0
+margin_right = 1026.0
 margin_bottom = 182.0
+script = ExtResource( 7 )
+
+[node name="Line2D" type="Line2D" parent="UI_Layer/Panel"]
+position = Vector2( 250, 0 )
+points = PoolVector2Array( -4, 0, -4, 182 )
+width = 5.0
+default_color = Color( 1, 1, 1, 1 )
+
+[node name="Line2D2" type="Line2D" parent="UI_Layer/Panel"]
+position = Vector2( 249, 0 )
+points = PoolVector2Array( -248, 128, 322.268, 128, 525, 128 )
+width = 5.0
+default_color = Color( 1, 1, 1, 1 )
+
+[node name="Line2D3" type="Line2D" parent="UI_Layer/Panel"]
+position = Vector2( 775, 0 )
+points = PoolVector2Array( 2, 0, 2, 182 )
+width = 5.0
+default_color = Color( 1, 1, 1, 1 )
+
+[node name="Line2D4" type="Line2D" parent="UI_Layer/Panel"]
+position = Vector2( 775, 2 )
+points = PoolVector2Array( 2, 91, 244, 91 )
+width = 5.0
+default_color = Color( 1, 1, 1, 1 )
+
+[node name="ItemButton" type="Button" parent="UI_Layer/Panel"]
+margin_left = 785.0
+margin_top = 8.0
+margin_right = 1016.0
+margin_bottom = 79.0
+rect_pivot_offset = Vector2( 231, 0 )
+custom_fonts/font = SubResource( 1 )
+text = "Items"
+
+[node name="Portrait" type="Sprite" parent="UI_Layer/Panel"]
+position = Vector2( 125, 64 )
+scale = Vector2( 0.164894, 0.152837 )
+texture = ExtResource( 6 )
+
+[node name="Label" type="Label" parent="UI_Layer/Panel"]
+margin_left = 6.0
+margin_top = 135.0
+margin_right = 46.0
+margin_bottom = 158.0
+custom_fonts/font = SubResource( 3 )
+text = "HP:"
+
+[node name="Label2" type="Label" parent="UI_Layer/Panel"]
+margin_left = 6.0
+margin_top = 156.0
+margin_right = 46.0
+margin_bottom = 179.0
+custom_fonts/font = SubResource( 3 )
+text = "MP:"
+
+[node name="HP" type="Label" parent="UI_Layer/Panel"]
+margin_left = 30.0
+margin_top = 135.0
+margin_right = 117.0
+margin_bottom = 158.0
+custom_fonts/font = SubResource( 3 )
+text = "1000 / 1000"
+
+[node name="MP" type="Label" parent="UI_Layer/Panel"]
+margin_left = 30.0
+margin_top = 156.0
+margin_right = 117.0
+margin_bottom = 179.0
+custom_fonts/font = SubResource( 3 )
+text = "100 / 100"
+
+[node name="Attacks" type="Panel" parent="UI_Layer/Panel"]
+margin_left = 249.0
+margin_right = 774.0
+margin_bottom = 125.0
+script = ExtResource( 8 )
+
+[node name="Items" type="Panel" parent="UI_Layer/Panel"]
+visible = false
+margin_left = 249.0
+margin_right = 774.0
+margin_bottom = 182.0
+
+[node name="MoveButton" parent="UI_Layer/Panel" instance=ExtResource( 9 )]
+margin_left = 785.0
+margin_top = 104.0
+margin_right = 1016.0
+margin_bottom = 175.0
+custom_fonts/font = SubResource( 4 )
+text = "Move"
+
+[node name="Message" type="Label" parent="UI_Layer/Panel"]
+margin_left = 264.0
+margin_top = 138.0
+margin_right = 764.0
+margin_bottom = 162.0
+rect_pivot_offset = Vector2( 250, 12 )
+custom_fonts/font = SubResource( 3 )
+align = 1
+valign = 1
+
+[node name="SubMessage" type="Label" parent="UI_Layer/Panel"]
+margin_left = 264.0
+margin_top = 152.0
+margin_right = 764.0
+margin_bottom = 176.0
+rect_pivot_offset = Vector2( 250, 12 )
+custom_fonts/font = SubResource( 5 )
+align = 1
+valign = 1
+
+[node name="TempMessageTimer" type="Timer" parent="UI_Layer/Panel"]
+
+[node name="LeftButton" type="Button" parent="UI_Layer/Panel"]
+margin_left = 261.0
+margin_top = 54.0
+margin_right = 286.0
+margin_bottom = 74.0
+text = "<-"
+
+[node name="RightButton" type="Button" parent="UI_Layer/Panel"]
+margin_left = 737.0
+margin_top = 54.0
+margin_right = 762.0
+margin_bottom = 74.0
+shortcut_in_tooltip = false
+text = "->"
+
+[connection signal="child_entered_tree" from="UI_Layer/Panel/Attacks" to="UI_Layer/Panel/Attacks" method="_on_Attacks_child_entered_tree"]
+[connection signal="timeout" from="UI_Layer/Panel/TempMessageTimer" to="UI_Layer/Panel" method="_on_TempMessageTimer_timeout"]
+[connection signal="pressed" from="UI_Layer/Panel/LeftButton" to="UI_Layer/Panel" method="_on_LeftButton_pressed"]
+[connection signal="pressed" from="UI_Layer/Panel/LeftButton" to="UI_Layer/Panel/Attacks" method="_on_LeftButton_pressed"]
+[connection signal="pressed" from="UI_Layer/Panel/RightButton" to="." method="_on_RightButton_pressed"]
+[connection signal="pressed" from="UI_Layer/Panel/RightButton" to="UI_Layer/Panel" method="_on_RightButton_pressed"]
+[connection signal="pressed" from="UI_Layer/Panel/RightButton" to="UI_Layer/Panel/Attacks" method="_on_RightButton_pressed"]
