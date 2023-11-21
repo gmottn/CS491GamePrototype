@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Assets/Meshes/level_geo.tres" type="MeshLibrary" id=1]
 [ext_resource path="res://Entities/PlayerScn.tscn" type="PackedScene" id=2]
@@ -16,6 +16,11 @@
 [ext_resource path="res://Item/Pickup.tscn" type="PackedScene" id=14]
 [ext_resource path="res://OverworldEnemy.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Billboard.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Inventory/EquipmentInventory.gd" type="Script" id=17]
+
+[sub_resource type="Resource" id=5]
+script = ExtResource( 17 )
+Data = [ null, null, null, null, null ]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 11 )
@@ -45,6 +50,7 @@ script = ExtResource( 5 )
 [node name="Player" parent="." instance=ExtResource( 2 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5, 2, -4 )
 inventory_data = ExtResource( 6 )
+equipment_data = SubResource( 5 )
 
 [node name="RayCast" type="RayCast" parent="Player"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.878238, 0 )
@@ -102,7 +108,6 @@ environment = ExtResource( 3 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Interface" type="Control" parent="CanvasLayer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 7 )
@@ -112,6 +117,12 @@ margin_left = 10.0
 margin_top = 10.0
 margin_right = 74.0
 margin_bottom = 74.0
+
+[node name="Player_Equipment" parent="CanvasLayer/Interface" instance=ExtResource( 4 )]
+margin_left = 589.0
+margin_top = 11.0
+margin_right = 653.0
+margin_bottom = 75.0
 
 [node name="External_Inventory" parent="CanvasLayer/Interface" instance=ExtResource( 4 )]
 visible = false

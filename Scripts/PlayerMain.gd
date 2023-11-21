@@ -3,6 +3,7 @@ extends KinematicBody
 signal toggle_inventory
 
 export var inventory_data : Resource
+export var equipment_data : Resource
 onready var ray_cast = $RayCast
 onready var camera : Camera = $Head/Camera
 

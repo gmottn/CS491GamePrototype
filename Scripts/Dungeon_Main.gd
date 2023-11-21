@@ -9,6 +9,7 @@ onready var interface : Control = $CanvasLayer/Interface
 func _ready() ->void:
 	player.connect("toggle_inventory", self, "toggle_interface")
 	interface.set_player_inventory_data(player.inventory_data)
+	interface.set_player_equipment_data(player.equipment_data)
 	
 	for node in get_tree().get_nodes_in_group("external_inventory"):
 		node.connect("toggle_inventory", self, "toggle_interface")

@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "ItemData",
+"class": "EquipmentData",
+"language": "GDScript",
+"path": "res://Item/EquipmentData.gd"
+}, {
+"base": "InventoryData",
+"class": "EquipmentInventory",
+"language": "GDScript",
+"path": "res://Inventory/EquipmentInventory.gd"
+}, {
 "base": "Node",
 "class": "GridSlot",
 "language": "GDScript",
@@ -30,6 +40,8 @@ _global_script_classes=[ {
 "path": "res://Inventory/SlotData.gd"
 } ]
 _global_script_class_icons={
+"EquipmentData": "",
+"EquipmentInventory": "",
 "GridSlot": "",
 "InventoryData": "",
 "ItemData": "",
