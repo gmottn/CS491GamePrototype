@@ -1,9 +1,10 @@
-[gd_resource type="Resource" load_steps=9 format=2]
+[gd_resource type="Resource" load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/InventoryData.gd" type="Script" id=1]
 [ext_resource path="res://Inventory/SlotData.gd" type="Script" id=2]
 [ext_resource path="res://Item/Items/Axe.tres" type="Resource" id=3]
 [ext_resource path="res://Item/Items/Potion.tres" type="Resource" id=4]
+[ext_resource path="res://Item/Items/weapon_axe.tres" type="Resource" id=5]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 2 )
@@ -29,6 +30,12 @@ MAX_STACK_SIZE = 99
 item_data = ExtResource( 3 )
 stack_size = 1
 
+[sub_resource type="Resource" id=5]
+script = ExtResource( 2 )
+MAX_STACK_SIZE = 1
+item_data = ExtResource( 5 )
+stack_size = 1
+
 [resource]
 script = ExtResource( 1 )
-Data = [ SubResource( 1 ), SubResource( 2 ), SubResource( 4 ), null, null, SubResource( 3 ), null, null, null, null, null, null, null, null, null, null, null, null ]
+Data = [ SubResource( 1 ), SubResource( 2 ), SubResource( 4 ), null, SubResource( 3 ), SubResource( 5 ), null, null, null, null, null, null, null, null, null, null ]

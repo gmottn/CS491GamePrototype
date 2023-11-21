@@ -1,0 +1,21 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://Item/EquipmentData.gd" type="Script" id=1]
+
+[sub_resource type="StreamTexture" id=1]
+flags = 23
+load_path = "res://.import/#2 - Transparent Icons & Drop Shadow.png-2a844030c7ced58493a5832ab85d8e1e.s3tc.stex"
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 23
+atlas = SubResource( 1 )
+region = Rect2( 352, 160, 32, 32 )
+
+[resource]
+script = ExtResource( 1 )
+name = "Battle Axe"
+description = [ "Axe made for fighting" ]
+stackable = false
+texture = SubResource( 2 )
+defense = 0
+attack = 5
