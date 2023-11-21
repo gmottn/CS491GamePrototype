@@ -14,7 +14,7 @@ var color = Color(1,1,1,1)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	position  += initialOffset
+	#position  += initialOffset
 	$Label.text = str(damage)
 	$Label.modulate = color
 	start_movement_and_fadeout()

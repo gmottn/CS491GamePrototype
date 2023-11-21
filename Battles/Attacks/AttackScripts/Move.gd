@@ -12,19 +12,18 @@ extends "res://Battles/Attacks/AttackScripts/AttackBase.gd"
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#define these per attack
-	targetSpots = [[1,0],[-1,0],[0,-1],[0,1]]
+	
 	splashSpots = []
-	damage = 1002 # base damage
+	damage = 0 # base damage
 	statusEffects = []
 	splashDegredation = 0.8
 	maxDepth = 1
 	
 	#leave these alone
-	gridManager = get_tree().get_root().find_node("GridManager",true,false)
-	battleManager =  get_tree().get_root().find_node("BattleManager",true,false)
+
 	initialize_attack()
 	# Replace with function body.
-
+	targetSpots = caster.moveSpots
 
 
 
@@ -35,18 +34,13 @@ func target_code():
 
 
 #lave this function alone
-func initialize_attack():
-	caster = get_parent()
-	attackClickable = attackClickableScene.instance()
-	attackClickable.distanceMult = attackClickableNumber
-	attackClickable.attack = self
-	gridManager.get_node("UI_Layer/Panel").add_child(attackClickable)
-	
-	affiliation = caster.affiliation
-	if affiliation == "hero":
-		for spots in splashSpots:
-			print("added")
-			spots[0] *= -1
+
 func create_targets(targetSlots):
+	targetSlots = filter_targetSlots(targetSlots)
 	var targetType = "Move"
 	targets = gridManager.create_targets(targetSlots,self,targetType,1)
+func filter_targetSlots(targetSlots):
+	for slot in targetSlots:
+		if slot.entity != null:
+			targetSlots.erase(slot)
+	return targetSlots

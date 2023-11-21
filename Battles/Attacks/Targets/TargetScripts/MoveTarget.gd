@@ -9,6 +9,7 @@ var orientation = 0;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	check_if_space_occupied()
 	create_shadow()
 	var green = Color(0,1,0,1) # Replace with function body.
 	$Sprite.modulate = green
@@ -80,10 +81,10 @@ func create_chain_targets(targetSlots):
 		print(targetSlots)
 		var targetType = "Chain"
 		gridManager.create_chain_targets(targetSlots[0],attack,targetSlots.duplicate(),1,self,orientation)
-func _on_Area2D_mouse_entered():
+func _on_Area2D_mouse_entered(AIPass = false):
 	#.super()
 	display_shadow()
-func _on_Area2D_mouse_exited():
+func _on_Area2D_mouse_exited(AIPass = false):
 	#.super()
 	if(!selected and $Sprite.visible):
 		remove_shadow()
@@ -105,4 +106,6 @@ func display_shadow():
 func remove_shadow():
 	$shadowSprite.visible = false
 	
-
+func check_if_space_occupied():
+	if(gridSlot.entity != null):
+		delete_self()
