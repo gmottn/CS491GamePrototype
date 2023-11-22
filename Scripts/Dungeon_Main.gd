@@ -54,8 +54,8 @@ func _generatemap():
 					$GridMap.set_cell_item(x1, 0, y1, 2)
 				if ($GridMap.get_cell_item(x1, 0, y1+1) == 1) and ($GridMap.get_cell_item(x1, 0, y1-1) == 1): 
 					$GridMap.set_cell_item(x1, 0, y1, 2,16)
-				add_child(light)
-				light.translation(x1,y1,0);
+			
+			
 			
 		
 
