@@ -12,6 +12,16 @@ const dir = [Vector2.RIGHT, Vector2.LEFT, Vector2.UP, Vector2.DOWN]
 var grid_size = 10
 var grid_steps = 100
 
+
+#entities
+
+onready var chest = $Chest
+onready var pickup = $Pickup
+onready var enemy = $Enemy
+
+#set this to -12, basically the 'floor' of the map
+var floor_level = -12
+
 func _generatemap():
 	randomize()
 	
@@ -43,6 +53,7 @@ func _generatemap():
 		$GridMap.set_cell_item(current_pos.x, 0, current_pos.y, -1)
 		#$GridMap.set_cell_item(current_pos.x, 1, current_pos.y, 2)
 		
+	#decorate level
 	for x1 in range (-12,12):
 		for y1 in range(-12,12):
 			#get cell item setup: get_cell_item(xPos,Level,yPos)
@@ -54,10 +65,87 @@ func _generatemap():
 					$GridMap.set_cell_item(x1, 0, y1, 2)
 				if ($GridMap.get_cell_item(x1, 0, y1+1) == 1) and ($GridMap.get_cell_item(x1, 0, y1-1) == 1): 
 					$GridMap.set_cell_item(x1, 0, y1, 2,16)
-			
-			
+			# or, we add a light
+			if ($GridMap.get_cell_item(x1, 0, y1) == -1) or $GridMap.get_cell_item(x1, 0, y1) == 2: 
+				var randomNumber = rand_range(0,1)
+				if (randomNumber <= 0.15):
+					var light = OmniLight.new()
+					#light.light_color = Color(1, 1, 1)  # White light
+					light.omni_range = 20
+					add_child(light)
+					var tilepos = $GridMap.map_to_world(x1,0,y1)
+					#have to multiply by 3 or something
+					light.translation = Vector3(tilepos.x*3,0,tilepos.z*3)
+					light.translation.y = floor_level
+				
+				
 			
 		
+	
+	
+	#add player
+	for x2 in range (-12,12):
+		for y2 in range(-12,12):
+			#check for empty cell
+			if ($GridMap.get_cell_item(x2, 0, y2) == -1): 
+				var tilepos = $GridMap.map_to_world(x2,0,y2)
+				$Player.translation = Vector3(tilepos.x*3,0,tilepos.z*3)
+				$Player.translation.y = floor_level
+				
+				#print("GridMap: " + str($GridMap.map_to_world(x1,0,y1)))
+				#print($Player.translation)
+				
+				
+			
+	
+	#add enemy
+	for x2 in range (-12,12):
+		for y2 in range(-12,12):
+			if ($GridMap.get_cell_item(x2, 0, y2) == -1): 
+				var randomNumber = rand_range(0,1)
+				if (randomNumber <= 0.15):
+					var tilepos = $GridMap.map_to_world(x2,0,y2)
+					$Enemy.translation = Vector3(tilepos.x*3,0,tilepos.z*3)
+					$Enemy.translation.y = floor_level
+					break
+		
+	#add chest
+	for x2 in range (-12,12):
+		for y2 in range(-12,12):
+			if ($GridMap.get_cell_item(x2, 0, y2) == -1): 
+				var randomNumber = rand_range(0,1)
+				if (randomNumber <= 0.15):
+					var tilepos = $GridMap.map_to_world(x2,0,y2)
+					$Chest.translation = Vector3(tilepos.x*3,0,tilepos.z*3)
+					$Chest.translation.y = floor_level
+					break
+		
+	
+	#add drop
+	for x2 in range (-12,12):
+		for y2 in range(-12,12):
+			if ($GridMap.get_cell_item(x2, 0, y2) == -1): 
+				var randomNumber = rand_range(0,1)
+				if (randomNumber <= 0.15):
+					var tilepos = $GridMap.map_to_world(x2,0,y2)
+					$Pickup.translation = Vector3(tilepos.x*3,0,tilepos.z*3)
+					$Pickup.translation.y = floor_level
+					break
+					
+	#add npc
+	for x2 in range (-12,12):
+		for y2 in range(-12,12):
+			if ($GridMap.get_cell_item(x2, 0, y2) == -1): 
+				var randomNumber = rand_range(0,1)
+				var tilepos = $GridMap.map_to_world(x2,0,y2)
+				if (randomNumber <= 0.10):
+					
+					$BillBoard.translation = Vector3(tilepos.x*3,0,tilepos.z*3)
+					$BillBoard.translation.y = floor_level
+					break
+	
+	
+	
 
 func _ready() ->void:
 	_generatemap()

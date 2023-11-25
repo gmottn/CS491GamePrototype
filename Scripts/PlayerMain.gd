@@ -37,7 +37,7 @@ func _input(event):
 func _process(delta):
 	
 	direction = Vector3()
-	
+	#print(translation)
 	if not is_on_floor():
 		fall.y -= gravity * delta
 	

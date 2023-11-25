@@ -43,7 +43,7 @@ stack_size = 1
 script = ExtResource( 5 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5, 2, -4 )
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )
 inventory_data = ExtResource( 6 )
 
 [node name="RayCast" type="RayCast" parent="Player"]
@@ -53,10 +53,11 @@ cast_to = Vector3( 0, 0, -20 )
 collision_mask = 4
 
 [node name="GridMap" type="GridMap" parent="."]
-transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -22, 0 )
+transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -16, 0 )
 mesh_library = ExtResource( 1 )
 __meta__ = {
-"_editor_clip_": 0
+"_editor_clip_": 0,
+"_editor_floor_": Vector3( 0, 1, 0 )
 }
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
