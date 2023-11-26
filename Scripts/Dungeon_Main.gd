@@ -44,7 +44,7 @@ func _generatemap():
 		for y in range(-12,12):
 			$GridMap.set_cell_item(x, -1, y, 0)
 			$GridMap.set_cell_item(x, 0, y, 1)
-			#$GridMap.set_cell_item(x, 1, y, 1)
+			$GridMap.set_cell_item(x, 1, y, 1)
 	
 	for i in range(0,grid_steps):
 		var temp_dir = dir.duplicate()
@@ -61,7 +61,7 @@ func _generatemap():
 		
 		$GridMap.set_cell_item(current_pos.x, -1, current_pos.y, 0)
 		$GridMap.set_cell_item(current_pos.x, 0, current_pos.y, -1)
-		$GridMap.set_cell_item(current_pos.x, 1, current_pos.y, 1)
+		#$GridMap.set_cell_item(current_pos.x, 1, current_pos.y, 1)
 		
 	#decorate level
 	for x1 in range (-12,12):
@@ -105,6 +105,7 @@ func _generatemap():
 	var npclocation
 	var itemlocation
 	var enemylocation
+	var enemylocation2
 	
 	
 	#add player and npc
@@ -118,39 +119,53 @@ func _generatemap():
 				$Player.translation = Vector3(tilepos.x*3,0,tilepos.z*3)
 				$Player.translation.y = floor_level
 				playerLocation = tilepos
-				
-				if ($GridMap.get_cell_item(rx+3, 0, ry) == -1): 
+				#extremely bad way of spawning but screw it, who cares
+				if ($GridMap.get_cell_item(rx+3, 0, ry) == -1) or ($GridMap.get_cell_item(rx+3, 0, ry) == 2): 
 					tilepos = $GridMap.map_to_world(rx+3,0,ry)
 					$BillBoard.translation = Vector3(tilepos.x*3,0,tilepos.z*3)
 					$BillBoard.translation.y = floor_level
 					npclocation = tilepos
-					tilepos = $GridMap.map_to_world(rx+1,0,ry)
-					$Pickup.translation = Vector3(tilepos.x*3,0,tilepos.z*3)
-					$Pickup.translation.y = floor_level
-					itemlocation = tilepos
-				elif ($GridMap.get_cell_item(rx-3, 0, ry) == -1):
+					
+				elif ($GridMap.get_cell_item(rx-3, 0, ry) == -1) or ($GridMap.get_cell_item(rx-3, 0, ry) == 2): 
 					tilepos = $GridMap.map_to_world(rx-3,0,ry)
 					$BillBoard.translation = Vector3(tilepos.x*3,0,tilepos.z*3)
 					$BillBoard.translation.y = floor_level
 					npclocation = tilepos
-					tilepos = $GridMap.map_to_world(rx-1,0,ry)
-					$Pickup.translation = Vector3(tilepos.x*3,0,tilepos.z*3)
-					$Pickup.translation.y = floor_level
-					itemlocation = tilepos
-				elif ($GridMap.get_cell_item(rx, 0, ry+3) == -1):
+					
+				elif ($GridMap.get_cell_item(rx, 0, ry+3) == -1) or ($GridMap.get_cell_item(rx, 0, ry+3) == 2):
 					tilepos = $GridMap.map_to_world(rx,0,ry+3)
 					$BillBoard.translation = Vector3(tilepos.x*3,0,tilepos.z*3)
 					$BillBoard.translation.y = floor_level
 					npclocation = tilepos
-					tilepos = $GridMap.map_to_world(rx,0,ry+1)
-					$Pickup.translation = Vector3(tilepos.x*3,0,tilepos.z*3)
-					$Pickup.translation.y = floor_level
-					itemlocation = tilepos
-				elif ($GridMap.get_cell_item(rx, 0, ry-3) == -1):
+			
+				elif ($GridMap.get_cell_item(rx, 0, ry-3) == -1) or ($GridMap.get_cell_item(rx, 0, ry-3) == 2):
 					tilepos = $GridMap.map_to_world(rx,0,ry-3)
 					$BillBoard.translation = Vector3(tilepos.x*3,0,tilepos.z*3)
 					$BillBoard.translation.y = floor_level
 					npclocation = tilepos
+					
+					
+				# ITEM SPAWNING
+				if ($GridMap.get_cell_item(rx+3, 0, ry) == -1) or ($GridMap.get_cell_item(rx+3, 0, ry) == 2): 
+					
+					tilepos = $GridMap.map_to_world(rx+1,0,ry)
+					$Pickup.translation = Vector3(tilepos.x*3,0,tilepos.z*3)
+					$Pickup.translation.y = floor_level
+					itemlocation = tilepos
+				elif ($GridMap.get_cell_item(rx-3, 0, ry) == -1) or ($GridMap.get_cell_item(rx-3, 0, ry) == 2): 
+					
+					tilepos = $GridMap.map_to_world(rx-1,0,ry)
+					$Pickup.translation = Vector3(tilepos.x*3,0,tilepos.z*3)
+					$Pickup.translation.y = floor_level
+					itemlocation = tilepos
+				elif ($GridMap.get_cell_item(rx, 0, ry+3) == -1) or ($GridMap.get_cell_item(rx, 0, ry+3) == 2):
+					
+					tilepos = $GridMap.map_to_world(rx,0,ry+1)
+					$Pickup.translation = Vector3(tilepos.x*3,0,tilepos.z*3)
+					$Pickup.translation.y = floor_level
+					itemlocation = tilepos
+				elif ($GridMap.get_cell_item(rx, 0, ry-3) == -1) or ($GridMap.get_cell_item(rx, 0, ry-3) == 2):
+					
 					tilepos = $GridMap.map_to_world(rx,0,ry-1)
 					$Pickup.translation = Vector3(tilepos.x*3,0,tilepos.z*3)
 					$Pickup.translation.y = floor_level
@@ -172,11 +187,27 @@ func _generatemap():
 					$Enemy.translation.y = floor_level
 					enemylocation = tilepos
 					break
-		
+					
+	#add 2nd enemy 
+	
+	#for x2 in range (-12,12):
+	#	for y2 in range(-12,12):
+	#		var tilepos = $GridMap.map_to_world(x2,0,y2)
+	#		if ($GridMap.get_cell_item(x2, 0, y2) == -1) and ((tilepos != playerLocation) or (tilepos != npclocation) or (tilepos != itemlocation) or (tilepos != enemylocation)): 
+	#			var randomNumber = rand_range(0,1)
+	#			if (randomNumber <= 0.15):
+	#				
+	#				$Enemy2.translation = Vector3(tilepos.x*3,0,tilepos.z*3)
+	#				#$Enemy2.translation.y = floor_level
+	#				enemylocation2 = tilepos
+	#				break
+	#				
+	
 	#add chest
 	for x2 in range (-12,12):
 		for y2 in range(-12,12):
 			var tilepos = $GridMap.map_to_world(x2,0,y2)
+			#($GridMap.get_cell_item(x2-1, 0, y2) == 1) or ($GridMap.get_cell_item(x2, 0, y2-1) == 1)
 			if ($GridMap.get_cell_item(x2, 0, y2) == -1) and ((tilepos != playerLocation) or (tilepos != npclocation) or (tilepos != itemlocation) or (tilepos != enemylocation)): 
 				var randomNumber = rand_range(0,1)
 				
