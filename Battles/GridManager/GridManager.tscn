@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Battles/GridManager/GridManager.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/sepura-font/Sepura-K7z9A.ttf" type="DynamicFontData" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://Battles/GridManager/Panel.gd" type="Script" id=7]
 [ext_resource path="res://Battles/GridManager/AttacksPanel.gd" type="Script" id=8]
 [ext_resource path="res://Battles/Attacks/AttackClickable/AttackClickable.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Battles/GridManager/ItemButton.gd" type="Script" id=10]
+[ext_resource path="res://Battles/GridManager/Items.gd" type="Script" id=11]
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
@@ -33,6 +35,7 @@ current = true
 script = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="Camera2D"]
+visible = false
 scale = Vector2( 0.042, 0.042 )
 z_index = 5
 texture = ExtResource( 5 )
@@ -77,6 +80,7 @@ margin_bottom = 79.0
 rect_pivot_offset = Vector2( 231, 0 )
 custom_fonts/font = SubResource( 1 )
 text = "Items"
+script = ExtResource( 10 )
 
 [node name="Portrait" type="Sprite" parent="UI_Layer/Panel"]
 position = Vector2( 125, 64 )
@@ -125,7 +129,8 @@ script = ExtResource( 8 )
 visible = false
 margin_left = 249.0
 margin_right = 774.0
-margin_bottom = 182.0
+margin_bottom = 125.0
+script = ExtResource( 11 )
 
 [node name="MoveButton" parent="UI_Layer/Panel" instance=ExtResource( 9 )]
 margin_left = 785.0
@@ -157,14 +162,14 @@ valign = 1
 
 [node name="TempMessageTimer" type="Timer" parent="UI_Layer/Panel"]
 
-[node name="LeftButton" type="Button" parent="UI_Layer/Panel"]
+[node name="LeftButtonAttacks" type="Button" parent="UI_Layer/Panel"]
 margin_left = 261.0
 margin_top = 54.0
 margin_right = 286.0
 margin_bottom = 74.0
 text = "<-"
 
-[node name="RightButton" type="Button" parent="UI_Layer/Panel"]
+[node name="RightButtonAttacks" type="Button" parent="UI_Layer/Panel"]
 margin_left = 737.0
 margin_top = 54.0
 margin_right = 762.0
@@ -172,10 +177,39 @@ margin_bottom = 74.0
 shortcut_in_tooltip = false
 text = "->"
 
+[node name="LeftButtonItems" type="Button" parent="UI_Layer/Panel"]
+margin_left = 261.0
+margin_top = 54.0
+margin_right = 286.0
+margin_bottom = 74.0
+text = "<-"
+
+[node name="RightButtonItems" type="Button" parent="UI_Layer/Panel"]
+margin_left = 737.0
+margin_top = 54.0
+margin_right = 762.0
+margin_bottom = 74.0
+shortcut_in_tooltip = false
+text = "->"
+
+[node name="Background" type="Sprite" parent="UI_Layer"]
+position = Vector2( 882, 485 )
+scale = Vector2( 179.162, 129.25 )
+z_index = -9
+z_as_relative = false
+texture = ExtResource( 5 )
+
+[connection signal="pressed" from="UI_Layer/Panel/ItemButton" to="UI_Layer/Panel" method="_on_ItemButton_pressed"]
 [connection signal="child_entered_tree" from="UI_Layer/Panel/Attacks" to="UI_Layer/Panel/Attacks" method="_on_Attacks_child_entered_tree"]
+[connection signal="child_entered_tree" from="UI_Layer/Panel/Items" to="UI_Layer/Panel/Items" method="_on_Items_child_entered_tree"]
 [connection signal="timeout" from="UI_Layer/Panel/TempMessageTimer" to="UI_Layer/Panel" method="_on_TempMessageTimer_timeout"]
-[connection signal="pressed" from="UI_Layer/Panel/LeftButton" to="UI_Layer/Panel" method="_on_LeftButton_pressed"]
-[connection signal="pressed" from="UI_Layer/Panel/LeftButton" to="UI_Layer/Panel/Attacks" method="_on_LeftButton_pressed"]
-[connection signal="pressed" from="UI_Layer/Panel/RightButton" to="." method="_on_RightButton_pressed"]
-[connection signal="pressed" from="UI_Layer/Panel/RightButton" to="UI_Layer/Panel" method="_on_RightButton_pressed"]
-[connection signal="pressed" from="UI_Layer/Panel/RightButton" to="UI_Layer/Panel/Attacks" method="_on_RightButton_pressed"]
+[connection signal="pressed" from="UI_Layer/Panel/LeftButtonAttacks" to="UI_Layer/Panel" method="_on_LeftButton_pressed"]
+[connection signal="pressed" from="UI_Layer/Panel/LeftButtonAttacks" to="UI_Layer/Panel/Attacks" method="_on_LeftButton_pressed"]
+[connection signal="pressed" from="UI_Layer/Panel/RightButtonAttacks" to="." method="_on_RightButton_pressed"]
+[connection signal="pressed" from="UI_Layer/Panel/RightButtonAttacks" to="UI_Layer/Panel" method="_on_RightButton_pressed"]
+[connection signal="pressed" from="UI_Layer/Panel/RightButtonAttacks" to="UI_Layer/Panel/Attacks" method="_on_RightButton_pressed"]
+[connection signal="pressed" from="UI_Layer/Panel/LeftButtonItems" to="UI_Layer/Panel" method="_on_LeftButton_pressed"]
+[connection signal="pressed" from="UI_Layer/Panel/LeftButtonItems" to="UI_Layer/Panel/Attacks" method="_on_LeftButton_pressed"]
+[connection signal="pressed" from="UI_Layer/Panel/RightButtonItems" to="." method="_on_RightButton_pressed"]
+[connection signal="pressed" from="UI_Layer/Panel/RightButtonItems" to="UI_Layer/Panel" method="_on_RightButton_pressed"]
+[connection signal="pressed" from="UI_Layer/Panel/RightButtonItems" to="UI_Layer/Panel/Attacks" method="_on_RightButton_pressed"]

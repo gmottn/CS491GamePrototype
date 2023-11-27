@@ -22,6 +22,8 @@ func set_stack_size(value : int) -> void:
 		stack_size = 1
 		push_error("%s is not stackable, reset to 1" % item_data.name)
 
+	
+
 func create_single_slot_data() -> SlotData:
 	var single_slot_data  : SlotData = duplicate()
 	single_slot_data.stack_size = 1

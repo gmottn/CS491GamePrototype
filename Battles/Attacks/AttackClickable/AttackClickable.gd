@@ -14,9 +14,11 @@ var active = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
 	battleManager = get_tree().get_root().find_node("BattleManager",true,false)
 	if(is_instance_valid(attack)):
 		text = attack.get_script().resource_path.get_file().get_basename()
+		$Label.text = str(attack.mpCost) + " MP" 
 		battleManager.connect("state_changed",self,"_on_state_changed_triggered")
 
 	

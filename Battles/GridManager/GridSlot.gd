@@ -9,6 +9,7 @@ var entity = null # reference to the entity inside of this GridSlot, null means 
 var affiliation = null # either "hero" or "enemy" to dictate which grid it is part of
 var selected = false setget set_selected
 var clickable = true
+var delay = 0
 
 
 func set_selected(value):
@@ -31,7 +32,10 @@ func create_entity(entityName):
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
+func _process(delta):
+	if(delay > 0 and battleManager.is_state("hero")):
+		delay-=1
+		
 func get_x_location():
 	return location[0]
 func get_y_location():
@@ -43,8 +47,11 @@ func _on_Area2D_mouse_entered(AIPass = false):
 		$SelectedSprite.visible = true
 		if(is_instance_valid(entity)):
 			if(UI.selected != entity):
+				UI.attacksPanel.clear()
 				entity.selected_code()
 				UI.selected = entity
+			else:
+				UI.selected = null
 		else:
 			UI.selected = null
 
@@ -58,18 +65,22 @@ func _on_Area2D_mouse_exited():
 
 func _on_Area2D_input_event(viewport, event, shape_idx, AIpass = false):
 
-	if (battleManager.is_state("hero") and event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT and entity != null and entity.active) or AIpass:
-		
+	if (battleManager.is_state("hero") and event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT and entity != null and entity.active and !delay) or AIpass:
 		set_selected(true)
 		battleManager.changeState("SlotSelected")
+
 		
 
 func perform_damage(attack):
 	if(entity != null and !entity.dead):
 		print("damage done")
 		var damage = attack.damage
+		
+		var strength = attack.caster.strength
+		if(damage < 0):
+			strength = 0
 		var statusEffects = attack.statusEffects
-		entity.take_damage(damage,statusEffects)
+		entity.take_damage(damage + strength,statusEffects)
 		print(" a hit occurred")
 	else:
 		print(" a miss occurred")
@@ -85,7 +96,8 @@ func perform_damage(attack):
 			gridManager.transfer_entity(self,newSlot)
 	
 func _on_state_changed_triggered():
-	
+	if(battleManager.is_state("hero")):
+		delay = 1
 	if(!battleManager.is_state("SlotSelected") and !battleManager.is_state("targeting")):
 		set_selected(false)
 		$SelectedSprite.visible = false

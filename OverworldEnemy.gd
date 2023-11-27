@@ -4,11 +4,16 @@ var battleScene = preload("res://Battles/BattleScreen/BattleScreen.tscn")
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-
-
+var player = null
+var interface = null
+var inventory = null
+var stats = null
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	player = get_parent().get_node("Player")
+	stats = get_parent().get_node("PlayerStats")
+	interface = get_parent().get_node("CanvasLayer/Interface")
+	inventory = get_parent().get_node("CanvasLayer/Interface/Player_Inventory")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -22,7 +27,12 @@ func _on_Area_body_entered(body):
 func initiate_battle():
 	var battleInstance = battleScene.instance()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	battleInstance.player = player
+	battleInstance.stats = stats
 	get_tree().root.add_child(battleInstance)
-	get_tree().current_scene.queue_free()
+	player.set_process_input(false)
+	player.set_process(false)
+	interface.visible = false
 	get_tree().current_scene = battleInstance
+	queue_free()
 	

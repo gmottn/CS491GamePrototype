@@ -64,3 +64,6 @@ func pick_up_slot_data(slot_data : SlotData) -> bool:
 			emit_signal("inventory_updated", self)
 			return true
 	return false
+func emit():
+	emit_signal("inventory_updated", self)
+		

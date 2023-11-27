@@ -14,10 +14,11 @@ func _ready():
 	#define these per attack
 	targetSpots = [[0,0],[1,0],[-1,0],[0,1],[0,-1]]
 	splashSpots = [[-1,0],[0,1]]
-	damage = 1002 # base damage
+	damage = 10 # base damage
 	statusEffects = []
 	splashDegredation = 1
 	maxDepth = 0
+	mpCost = 10
 	
 	#leave these alone
 

@@ -1,4 +1,4 @@
-extends "res://Battles/Attacks/AttackScripts/AttackBase.gd"
+extends "res://Battles/Attacks/ItemScripts/ItemBase.gd"
 
 
 
@@ -14,11 +14,10 @@ func _ready():
 	#define these per attack
 	targetSpots = []
 	splashSpots = []
-	damage = 1002 # base damage
+	damage = -200 # base damage
 	statusEffects = []
 	splashDegredation = 0.8
 	maxDepth = 1	
-	mpCost = 0
 	#leave these alone
 
 	initialize_attack()
@@ -31,7 +30,7 @@ func attack_code(gridSlot): # overide
 	gridSlot.perform_damage(self)
 
 func target_code():
-	set_all_targets()
+	set_all_targets(false)
 
 
 #lave this function alone

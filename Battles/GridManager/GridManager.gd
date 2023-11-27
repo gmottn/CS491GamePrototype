@@ -179,7 +179,7 @@ func get_valid_spawn_points():
 		
 func get_party():
 	#TODO database implementation
-	return ["MainHero",""]
+	return ["Knight","Witch","Warrior"]
 func get_largest_row():
 	var heroRowSize = get_grid_width(heroGrid);
 	var enemyRowSize = get_grid_width(enemyGrid);

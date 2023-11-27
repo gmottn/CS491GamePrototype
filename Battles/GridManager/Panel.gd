@@ -17,12 +17,14 @@ var message = null
 var subMessage = null
 var battleManager = null
 var tempMessageTimer = null
+var mode = "item"
 
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
+	update_switchButton()
 	battleManager = get_tree().get_root().find_node("BattleManager",true,false)
 	battleManager.connect("state_changed",self,"_on_state_changed_triggered")
 	HP = get_node("HP")
@@ -39,6 +41,8 @@ func _ready():
 	
 	selected_code(null)
 func selected_code(value):
+		if(mode == "item"):
+			update_switchButton()
 		selected = value
 		var selectedHP = null
 		var selectedMaxHP = null
@@ -46,12 +50,14 @@ func selected_code(value):
 		var selectedMaxMP = null
 		var selectedPortrait = null
 		attacksPanel.reset()
+		itemsPanel.reset()
 		if(is_instance_valid(selected)):
 			selectedHP = selected.hp
 			selectedMaxHP = selected.maxHp
 			selectedMP = selected.mp
 			selectedMaxMP = selected.maxMp
 			selectedPortrait = selected.portrait
+			itemsPanel.set_caster(selected)
 		else:
 			selectedHP = "-"
 			selectedMaxHP = "-"
@@ -95,14 +101,14 @@ func update_message(msg,sub):
 	subMessage.text = sub
 	
 func _on_state_changed_triggered():
-	if(battleManager.is_turn("hero")):
+	if(battleManager.is_turn("hero") and !battleManager.is_state("finished")):
 		if(battleManager.is_state("hero")):
 			update_message("Hero Turn", "(Click on a hero on the left hand grid to select them)")
 		elif(battleManager.is_state("slotSelected")):
 			update_message("Select Attack","(BACKSPACE to deselect, Click on one of the attacks above to trigger it)")
 		elif(battleManager.is_state("targeting")):
 			update_message("Select Target", "(BACKPACE to deselect, Click on a target)")
-	elif(battleManager.is_turn("enemy")):
+	elif(battleManager.is_turn("enemy") and !battleManager.is_state("finished")):
 		update_message("Enemy Turn", "(Please wait as the enemies carry out their attack)")
 func temp_message(msg,sub,time):
 	update_message(msg,sub)
@@ -116,3 +122,27 @@ func _on_TempMessageTimer_timeout():
 	_on_state_changed_triggered()
 
 
+
+
+func _on_ItemButton_pressed():
+	update_switchButton()
+func update_switchButton():
+	if mode == "attack":
+		mode = "item"
+		$Attacks.visible = false
+		$Items.visible = true
+		$Attacks.offset = 0
+		$LeftButtonAttacks.visible = false
+		$RightButtonAttacks.visible = false
+		$Items.update_arrows()
+		
+	else:
+		mode = "attack"
+		$Attacks.visible = true
+		$Items.visible = false
+		$Items.offset = 0
+		$LeftButtonItems.visible = false
+		$RightButtonItems.visible = false
+		$Attacks.update_arrows()
+	$ItemButton.update()
+	
