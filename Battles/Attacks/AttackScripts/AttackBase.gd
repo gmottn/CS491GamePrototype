@@ -4,7 +4,7 @@ var attackClickableScene = preload("res://Battles/Attacks/AttackClickable/Attack
 var targetSpots = []# edit
 var targets = []
 var splashSpots = [] # edit
-var caster = null
+var caster = null setget set_caster
 var affiliation = null
 var damage = 0 # base damage # edit
 var statusEffects = [] # edit
@@ -43,12 +43,18 @@ func attack_code(gridSlot): # overide
 
 
 	
-func set_all_targets():
+func set_all_targets(opposing = true):
 	
 	if(affiliation == "hero"):
-		targetSpots = gridManager.get_all_enemy_slots()
+		if(opposing):
+			targetSpots = gridManager.get_all_enemy_slots()
+		else:
+			targetSpots = gridManager.get_all_hero_slots()
 	else:
-		targetSpots = gridManager.get_all_hero_slots()
+		if(opposing):
+			targetSpots = gridManager.get_all_hero_slots()
+		else:
+			targetSpots = gridManager.get_all_enemy_slots()
 	#print(targetSpots)
 	create_targets(targetSpots)
 	#battleManager.changeState("Targeting")
@@ -127,6 +133,7 @@ func perform_attack():
 	
 	for target in targets:
 		target.perform_attack()
+	deduct_MP()
 	caster.active = false
 	
 	print("I Changed It")
@@ -147,9 +154,6 @@ func initialize_attack():
 	
 	attackClickable.attack = self
 	if(attackName != "Move"):
-		if(isItem):
-			gridManager.get_node("UI_Layer/Panel/Items").add_child(attackClickable)
-		else:
 			gridManager.get_node("UI_Layer/Panel/Attacks").add_child(attackClickable)
 	
 	affiliation = caster.affiliation
@@ -157,3 +161,7 @@ func initialize_attack():
 		for spots in splashSpots:
 			print("added")
 			spots[0] *= -1
+func set_caster(value):
+	caster = value
+	affiliation = caster.affiliation
+

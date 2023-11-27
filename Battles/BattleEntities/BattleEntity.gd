@@ -3,17 +3,18 @@ signal entity_deactivated(entity)
 var damagePopupScene = preload("res://Battles/Attacks/DamagePopup/DamagePopup.tscn")
 var attackScene = preload("res://Battles/Attacks/Attack.tscn")
 var entityAIScene = preload("res://Battles/BattleEntities/EntityAI.tscn")
-var maxHp = 1000
+var maxHp = 100
+var gold = 5
 var hp = maxHp
-var maxMp = 100
+var maxMp = 0
 var mp = maxMp
 var portrait = preload("res://Battles/BattleEntities/EntitySprites/Portraits/Knight.png")
 var AI = null
 var strength = 5
 var defense = 2
-var attacks = ["TestAttack","KnockbackAttack","TestPositionAttack","TestAttack","KnockbackAttack"]
+var attacks = ["TestAttack","Knockback","Position","TestAttack","Knockback"]
 var moveSpots = [[1,0],[-1,0],[0,-1],[0,1]]
-var sprite = null
+var sprite = preload("res://Battles/BattleEntities/EntitySprites/spriteDefault.png")
 var gridSlot = null
 var affiliation = null
 var entityName = null
@@ -26,6 +27,7 @@ var moveAttack = null
 func _ready():
 	
 	affiliation = gridSlot.affiliation
+	
 	battleManager.add_entity(self)
 	load_entity_stats()
 	configure_entity()
@@ -39,20 +41,26 @@ func create_attack(attackName,num):
 	var attackInstance = attackScene.instance()
 	var attackScript = find_attack_script(attackName)
 	attackInstance.script = attackScript
-	attackInstance.attackClickableNumber = num
 	add_child(attackInstance)
 	return attackInstance
 func load_entity_stats():
 	get_sprite()
+	if(affiliation == "hero"):
+		var stats = battleManager.get_stats_for(entityName)
+		if(is_instance_valid(stats)):
+			strength = stats.strength + battleManager.strengthBonus
+			defense = stats.defense + battleManager.defenseBonus
+			maxHp = stats.max_health
+			maxMp = stats.max_mp
+			hp = stats.health
+			mp = stats.mp
+			$Sprite.modulate = stats.color
+	else:
+		attacks = ["TestAttack","Position"]
 func get_sprite():
 	#communicate with database once implemented
-	
-	
-	if(affiliation == "hero"):
-		sprite = preload("res://Battles/BattleEntities/EntitySprites/spriteDefault.png")
-	else:
-		attacks = ["TestAttack","TestPositionAttack"]
-		sprite = preload("res://Battles/BattleEntities/EntitySprites/spriteEnemyDefault.png")
+	var txt = "res://Battles/BattleEntities/EntitySprites/Portraits/" + entityName + ".png"
+	portrait = load(txt)
 func configure_entity():
 	if(affiliation == "enemy"):
 		configure_AI()
@@ -62,12 +70,11 @@ func configure_sprite():
 	if(affiliation == "enemy"):
 		$Sprite.flip_h = true
 func take_damage(damage,statusEffects):
-	if(damage <= 0):
-		damage = abs(damage)
-	else:
+	if(damage > 0):
 		damage = damage - defense
-	if(damage < 0):
-		damage = 0
+		if(damage < 0):
+			damage = 0
+	
 	hp -= damage
 	print("New HP is...")
 	print(hp)
@@ -85,6 +92,7 @@ func check_if_dead():
 			battleManager.enemies.erase(self)
 			gridSlot.entity = null
 			queue_free()
+		battleManager._on_enity_dead_triggered(self)
 			
 func create_damage_popup(damage, statusEffects):
 	gridSlot.create_damage_popup(damage, statusEffects)

@@ -53,7 +53,7 @@ func AI_continue():
 func slotselected_code():
 	var move = attached.moveAttack
 	hidden_button_hover(move.attackClickable)
-	if(move.targets.size() > 0 and (randi() % 100) >=75):
+	if(move.targets.size() > 0 and (randi() % 100) >100):
 		#movement instead
 		var targetNum = randi() % move.targets.size()
 		path = [move,[targetNum]]

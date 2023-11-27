@@ -1,6 +1,7 @@
 extends Node2D
 
-
+var player = null
+var stats = null
 var battleID = 1; # the id that will be used to find the battle layout in the BattleDatabase 
 var gridTileScene = preload("res://Battles/GridManager/GridSlot.tscn")
 var tileSize = gridTileScene.instance().get_node("Sprite").texture.get_width()
@@ -17,6 +18,9 @@ var tileStartY = tileSize/2
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("READY")
+	$BattleManager.player = player
+	$BattleManager.inventory = player.inventory_data
+	
 	var grids = get_grids()
 	$GridManager.enemyGrid = grids[1]
 	$GridManager.heroGrid = grids[0]
@@ -45,7 +49,20 @@ func build_background():
 			floorSprite.texture = texture
 			floorSprite.position = Vector2(tileStartX + (tileSize * row * -1), tileStartY + (tileSize * column))
 			add_child(floorSprite)
-	
+func transition_to_overworld():
+	update_stats()
+	player.set_process_input(true)
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	player.set_process(true)
+	queue_free()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+func update_stats():
+	for hero in $BattleManager.heroes:
+		var stat = $BattleManager.get_stats_for(hero.entityName)
+		if(hero.hp <= 0):
+			stat.health = 1
+		else:
+			stat.health = hero.hp
+		stat.mp = hero.mp

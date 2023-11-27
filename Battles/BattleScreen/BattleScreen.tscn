@@ -1,22 +1,14 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Battles/BattleScreen/BattleScreen.gd" type="Script" id=1]
 [ext_resource path="res://Battles/BattleDatabase/BattleDatabase.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Battles/GridManager/GridManager.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Battles/BattleManager/BattleManager.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Battles/GridManager/GridSprites/sPlaceHolderBattleFiller.PNG" type="Texture" id=5]
 
 [node name="BattleScreen" type="Node2D"]
 script = ExtResource( 1 )
 
 [node name="BattleDatabase" parent="." instance=ExtResource( 2 )]
-
-[node name="Background" type="Sprite" parent="."]
-visible = false
-position = Vector2( 838.125, 556.625 )
-scale = Vector2( 115.49, 80.6146 )
-z_index = -2
-texture = ExtResource( 5 )
 
 [node name="BattleManager" parent="." instance=ExtResource( 4 )]
 

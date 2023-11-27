@@ -11,8 +11,8 @@ var rightButton = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	leftButton = get_parent().get_node("LeftButtonAttacks")
-	rightButton = get_parent().get_node("RightButtonAttacks")
+	leftButton = get_parent().get_node("LeftButtonItems")
+	rightButton = get_parent().get_node("RightButtonItems")
 	update_arrows()
 func clear():
 	numButtons = 0
@@ -34,10 +34,8 @@ func update_buttons():
 		
 		
 
-func _on_Attacks_child_entered_tree(node):
-	numButtons+=1
-	place_button(node,numButtons)
-	update_arrows()
+
+
 func place_button(node,num):
 	var xPosition = 0
 	var yPosition = 0
@@ -59,6 +57,8 @@ func reset():
 	offset = 0
 
 func update_arrows():
+	leftButton = get_parent().get_node("LeftButtonItems")
+	rightButton = get_parent().get_node("RightButtonItems")
 	var effectiveNum = (numButtons + (-4 * offset))
 	if(effectiveNum > 4):
 		rightButton.visible = true
@@ -80,3 +80,21 @@ func _on_LeftButton_pressed():
 
 func _on_RightButton_pressed():
 	set_offset(offset + 1)
+
+
+func _on_Items_child_entered_tree(node):
+	numButtons+=1
+	place_button(node,numButtons)
+	update_arrows()
+func set_caster(selected):
+	for i in range(get_child_count()):
+		var button = get_child(i)
+		button.attack.caster = selected
+		button.attack.caster.affiliation = selected.affiliation
+func exists(check):
+	for i in range(get_child_count()):
+		var button = get_child(i)
+		var txt = button.attack.attackName
+		if txt == check:
+			return button
+	return null
