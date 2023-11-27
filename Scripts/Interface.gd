@@ -8,6 +8,7 @@ var external_inventory_owner
 onready var player_inventory : PanelContainer = $Player_Inventory
 onready var grabbed_slot : PanelContainer = $GrabbedSlot
 onready var external_inventory : PanelContainer = $External_Inventory
+onready var player_equipment : PanelContainer = $Player_Equipment
 
 func _physics_process(delta)-> void:
 	if grabbed_slot.visible:
@@ -16,6 +17,10 @@ func _physics_process(delta)-> void:
 func set_player_inventory_data(inventory_data : InventoryData) -> void:
 	inventory_data.connect("inventory_interact", self, "on_inventory_interact")
 	player_inventory.set_inventory_data(inventory_data)
+	
+func set_player_equipment_data(inventory_data : InventoryData) -> void:
+	inventory_data.connect("inventory_interact", self, "on_inventory_interact")
+	player_equipment.set_inventory_data(inventory_data)
 	
 func set_external_inventory(_external_inventory_owner) -> void:
 	external_inventory_owner = _external_inventory_owner

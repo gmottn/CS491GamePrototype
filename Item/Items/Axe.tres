@@ -12,5 +12,5 @@ region = Rect2( 320, 160, 32, 32 )
 script = ExtResource( 1 )
 name = "Axe"
 description = [ "Damage: 3" ]
-stackable = null
+stackable = false
 texture = SubResource( 1 )

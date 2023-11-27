@@ -14,14 +14,14 @@ func _ready():
 	#define these per attack
 	targetSpots = [[0,0],[1,0],[-1,0],[0,1],[0,-1]]
 	splashSpots = [[-1,0],[0,1]]
-	damage = 1002 # base damage
+	damage = 10 # base damage
 	statusEffects = []
 	splashDegredation = 1
 	maxDepth = 0
+	mpCost = 10
 	
 	#leave these alone
-	gridManager = get_tree().get_root().find_node("GridManager",true,false)
-	battleManager =  get_tree().get_root().find_node("BattleManager",true,false)
+
 	initialize_attack()
 	# Replace with function body.
 
@@ -35,16 +35,4 @@ func target_code():
 	set_position_dependent_targets()
 
 
-#lave this function alone
-func initialize_attack():
-	caster = get_parent()
-	attackClickable = attackClickableScene.instance()
-	attackClickable.distanceMult = attackClickableNumber
-	attackClickable.attack = self
-	gridManager.get_node("UI_Layer/Panel").add_child(attackClickable)
-	
-	affiliation = caster.affiliation
-	if affiliation == "hero":
-		for spots in splashSpots:
-			print("added")
-			spots[0] *= -1
+

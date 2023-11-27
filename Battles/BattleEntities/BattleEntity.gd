@@ -1,23 +1,34 @@
-extends Node2D
+extends "res://Battles/GridManager/BattleElement.gd"
+signal entity_deactivated(entity)
 var damagePopupScene = preload("res://Battles/Attacks/DamagePopup/DamagePopup.tscn")
 var attackScene = preload("res://Battles/Attacks/Attack.tscn")
-var maxHp = 1000
+var entityAIScene = preload("res://Battles/BattleEntities/EntityAI.tscn")
+var maxHp = 100
+var gold = 5
 var hp = maxHp
-var maxMp = 1000
+var maxMp = 0
 var mp = maxMp
+var portrait = preload("res://Battles/BattleEntities/EntitySprites/Portraits/Knight.png")
+var AI = null
 var strength = 5
 var defense = 2
-var attacks = ["TestAttack","KnockbackAttack","TestPositionAttack","Move","KnightMove",]
-var sprite = null
+var attacks = ["TestAttack","Knockback","Position","TestAttack","Knockback"]
+var moveSpots = [[1,0],[-1,0],[0,-1],[0,1]]
+var sprite = preload("res://Battles/BattleEntities/EntitySprites/spriteDefault.png")
 var gridSlot = null
 var affiliation = null
 var entityName = null
 var currentStatusEffects = []
 var dead = false
+var active = false setget set_active
+var moveAttack = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
 	affiliation = gridSlot.affiliation
+	
+	battleManager.add_entity(self)
 	load_entity_stats()
 	configure_entity()
 	#perform_attack("TestAttack")
@@ -26,34 +37,44 @@ func _process(delta):
 	pass
 #	pass
 func create_attack(attackName,num):
+	
 	var attackInstance = attackScene.instance()
 	var attackScript = find_attack_script(attackName)
 	attackInstance.script = attackScript
-	attackInstance.attackClickableNumber = num
 	add_child(attackInstance)
+	return attackInstance
 func load_entity_stats():
 	get_sprite()
+	if(affiliation == "hero"):
+		var stats = battleManager.get_stats_for(entityName)
+		if(is_instance_valid(stats)):
+			strength = stats.strength + battleManager.strengthBonus
+			defense = stats.defense + battleManager.defenseBonus
+			maxHp = stats.max_health
+			maxMp = stats.max_mp
+			hp = stats.health
+			mp = stats.mp
+			$Sprite.modulate = stats.color
+	else:
+		attacks = ["TestAttack","Position"]
 func get_sprite():
 	#communicate with database once implemented
-	
-	
-	if(affiliation == "hero"):
-		sprite = preload("res://Battles/BattleEntities/EntitySprites/spriteDefault.png")
-	else:
-		sprite = preload("res://Battles/BattleEntities/EntitySprites/spriteEnemyDefault.png")
+	var txt = "res://Battles/BattleEntities/EntitySprites/Portraits/" + entityName + ".png"
+	portrait = load(txt)
 func configure_entity():
+	if(affiliation == "enemy"):
+		configure_AI()
 	configure_sprite()
 func configure_sprite():
 	$Sprite.texture = sprite
 	if(affiliation == "enemy"):
 		$Sprite.flip_h = true
 func take_damage(damage,statusEffects):
-	if(damage <= 0):
-		damage = abs(damage)
-	else:
+	if(damage > 0):
 		damage = damage - defense
-	if(damage < 0):
-		damage = 0
+		if(damage < 0):
+			damage = 0
+	
 	hp -= damage
 	print("New HP is...")
 	print(hp)
@@ -68,22 +89,25 @@ func check_if_dead():
 		#emit dead signal
 		dead = true
 		if(affiliation == "enemy"):
+			battleManager.enemies.erase(self)
 			gridSlot.entity = null
 			queue_free()
+		battleManager._on_enity_dead_triggered(self)
 			
 func create_damage_popup(damage, statusEffects):
-	var damagePopupInstance = damagePopupScene.instance()
-	damagePopupInstance.damage = damage
-	damagePopupInstance.statusEffects = statusEffects
-	gridSlot.add_child(damagePopupInstance)
+	gridSlot.create_damage_popup(damage, statusEffects)
 func add_status_effects(statusEffects):
 	pass
 func selected_code():
 	var num = 0
+	var attackList = []
 	for attack in attacks:
 		num+=1
-		create_attack(attack,num)
-	pass
+		attackList.append(create_attack(attack,num))
+	num+=1
+	moveAttack = create_attack("Move",num);
+	if(is_instance_valid(AI)):
+		AI.attacks = attackList
 func _input(event):
 	pass
 	#if event is InputEventKey:
@@ -99,4 +123,21 @@ func find_attack_script(attackName):
 		assert("Attack was not defined for me to be")
 	var attackScript = load("res://Battles/Attacks/AttackScripts/" + attackName + ".gd")
 	return attackScript
+func set_active(value):
+	active = value;
+	if(!active):
+		print("SIGNAL EMITTED")
+		battleManager._on_enity_deactivated_triggered(self)
+		if(affiliation == "hero"):
+			$Sprite.self_modulate.a= 0.5
+	else:
+		$Sprite.self_modulate.a= 1
+	if(is_instance_valid(AI)):
+		AI.deactivate()
+func configure_AI():
+	AI = entityAIScene.instance()
+	AI.attached = self
+	add_child(AI)
+func activate_AI():
+	AI.activate()
 	
