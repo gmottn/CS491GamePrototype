@@ -14,7 +14,7 @@ func _ready():
 	#define these per attack
 	targetSpots = []
 	splashSpots = []
-	damage = 1002 # base damage
+	damage = 10 # base damage
 	statusEffects = []
 	splashDegredation = 0.8
 	maxDepth = 1	

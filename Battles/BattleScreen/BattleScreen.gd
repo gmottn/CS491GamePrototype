@@ -52,8 +52,8 @@ func build_background():
 func transition_to_overworld():
 	update_stats()
 	player.set_process_input(true)
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	player.set_process(true)
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	queue_free()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

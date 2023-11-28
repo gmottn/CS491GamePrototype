@@ -207,7 +207,7 @@ func get_all_slots(chosenGrid):
 	var returnSlots = []
 	for row in chosenGrid:
 		for slot in row:
-			if slot.entity != null:
+			if slot is GridSlot and slot.entity != null:
 				returnSlots.append(slot)
 	return returnSlots
 func create_targets(targetSpots,attack,targetType,depth):
@@ -217,6 +217,8 @@ func create_targets(targetSpots,attack,targetType,depth):
 	var targets = []
 	var num = 0
 	for slot in targetSpots:
+		if(!(slot is GridSlot)):
+			continue;
 		num +=1;
 		var targetInstance = targetScene.instance()
 		if(targetType != ""):
@@ -261,7 +263,10 @@ func get_slot(slotLocation,gridType):
 		return null
 	print("Successful return")
 	print(chosenGrid[slotLocation[1]][slotLocation[0]])
-	return chosenGrid[slotLocation[1]][slotLocation[0]]
+	var ret = chosenGrid[slotLocation[1]][slotLocation[0]]
+	if(ret is GridSlot):
+		return ret
+	
 
 func transfer_entity(start,end):
 	var entity = start.entity

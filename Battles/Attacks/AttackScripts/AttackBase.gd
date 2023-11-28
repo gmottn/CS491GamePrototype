@@ -132,7 +132,8 @@ func _input(event):
 func perform_attack():
 	
 	for target in targets:
-		target.perform_attack()
+		if(is_instance_valid(target)):
+			target.perform_attack()
 	deduct_MP()
 	caster.active = false
 	
