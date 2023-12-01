@@ -85,6 +85,10 @@ func update_portrait(selectedPortrait):
 		portrait.flip_h = true
 	else:
 		portrait.flip_h = false
+	if(is_instance_valid(selected) and !(selected.active)):
+		portrait.self_modulate.a= 0.5
+	else:
+		portrait.self_modulate.a= 1
 func update_move():
 	if(is_instance_valid(selected)):
 		moveButton.visible = true

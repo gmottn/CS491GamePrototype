@@ -44,8 +44,9 @@ func _input(event):
 			check = false
 
 func random_battle_ID():
-	if(check):
-		return 1
-	else:
-		return 4
-	#return (randi()%4) + 1
+	#if(check):
+	#	return 1
+	#else:
+	#	return 4
+	#return (randi()%6) + 1
+	return 9

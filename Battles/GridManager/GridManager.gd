@@ -46,13 +46,16 @@ func build_hero_grid():
 	party = get_party()
 	var y = -1
 	var x = -1
+	#for i in range (4):
+		#create_GridSlot(j,x,y,"hero")
 	for i in heroGrid:
 		y+=1
 		for j in i:
 			x+=1
 			if j != 2:
-				
+				#if(!((x == 0 and y == 0) or (x == 0 and y == 1) or (x == 1 and y == 0) or (x == 1 and y == 1))):
 				create_GridSlot(j,x,y,"hero")
+				
 			
 		x = -1
 	
@@ -80,11 +83,11 @@ func create_GridSlot(entity,x,y,affiliation):
 		if entity == 1:
 			possibleSpawnPoints.append(slotInstance)
 		baseX = tileStartX
-		baseY = tileStartY
+		baseY = tileStartY * slotSprite.texture.get_height()
 	else: #affiliation = "enemy"
 		baseX = tileStartX + ((get_grid_width(heroGrid) + tilesBetweenGrids) * tileSize)
-		baseY = tileStartY
-		
+		baseY = tileStartY * slotSprite.texture.get_height()
+	baseY = (slotSprite.texture.get_height()/2) + slotSprite.texture.get_height()* 2
 	change_sprite(x,y, slotSprite)
 	slotInstance.position = Vector2(baseX + x*slotSprite.texture.get_width(),baseY + y*slotSprite.texture.get_height())
 	
@@ -132,7 +135,7 @@ func configure_camera_zoom():
 #sets initial camera placement
 func configure_camera_placement():
 	var xPlacement = (tileSize * (get_grid_width(heroGrid) + (tilesBetweenGrids/2)))
-	var yPlacement = tileStartY + (tileSize * (get_largest_column()/2))
+	var yPlacement = ((tileSize/2) + tileSize* 2) + (tileSize * (get_largest_column()/2))
 	$Camera2D.position = Vector2(xPlacement,yPlacement)
 #offsets camra placement basd on vertical ratios
 func configure_camera_offset(desiredHeight):
@@ -207,7 +210,7 @@ func get_all_slots(chosenGrid):
 	var returnSlots = []
 	for row in chosenGrid:
 		for slot in row:
-			if slot is GridSlot and slot.entity != null:
+			if slot is GridSlot and slot.entity != null and !slot.entity.dead:
 				returnSlots.append(slot)
 	return returnSlots
 func create_targets(targetSpots,attack,targetType,depth):
@@ -262,7 +265,7 @@ func get_slot(slotLocation,gridType):
 		
 		return null
 	print("Successful return")
-	print(chosenGrid[slotLocation[1]][slotLocation[0]])
+	
 	var ret = chosenGrid[slotLocation[1]][slotLocation[0]]
 	if(ret is GridSlot):
 		return ret
@@ -297,6 +300,17 @@ func get_grid(gridType):
 	else: #gridType == "enemy"
 		return enemyGrid
 
+func get_slot_in_row(row,num,gridType):
+	var grid = get_grid(gridType)
+	var slot = null
+	for i in range(get_grid_width(grid)):
+		slot = get_slot([i,row],gridType)
+		if(is_instance_valid(slot) and is_instance_valid(slot.entity) ):
+			num -= 1
+			if(num <= 0):
+				return slot
+	return null
 	
+
 
 

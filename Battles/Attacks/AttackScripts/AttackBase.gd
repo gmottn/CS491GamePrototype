@@ -17,6 +17,10 @@ var knockback = [0,0]
 var isItem = false;
 var attackName = null
 var mpCost = 0
+var description = "Description Here"
+var subDescription = "Sub Description Here"
+var finalCount = true # if true, the final attack gets the splash slots
+var firstClick = null
 
 
 
@@ -43,7 +47,7 @@ func attack_code(gridSlot): # overide
 
 
 	
-func set_all_targets(opposing = true):
+func set_all_targets(opposing = true,num = 1):
 	
 	if(affiliation == "hero"):
 		if(opposing):
@@ -56,13 +60,13 @@ func set_all_targets(opposing = true):
 		else:
 			targetSpots = gridManager.get_all_enemy_slots()
 	#print(targetSpots)
-	create_targets(targetSpots)
+	create_targets(targetSpots,num)
 	#battleManager.changeState("Targeting")
-func create_targets(targetSlots):
+func create_targets(targetSlots, num = 1):
 	var targetType = ""
 	if(maxDepth == 0):
 		targetType = "Unselectable"
-	targets = gridManager.create_targets(targetSlots,self,targetType,1)
+	targets = gridManager.create_targets(targetSlots,self,targetType,num)
 
 		
 func set_position_dependent_targets(opposing = true):
@@ -165,4 +169,8 @@ func initialize_attack():
 func set_caster(value):
 	caster = value
 	affiliation = caster.affiliation
-
+func get_opposing_grid_slot_row(row,num):
+	if(affiliation == "hero"):
+		return gridManager.get_slot_in_row(row,num,"enemy")
+	else:
+		return gridManager.get_slot_in_row(row,num,"hero")

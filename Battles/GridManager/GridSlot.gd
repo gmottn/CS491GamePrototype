@@ -50,8 +50,7 @@ func _on_Area2D_mouse_entered(AIPass = false):
 				UI.attacksPanel.clear()
 				entity.selected_code()
 				UI.selected = entity
-			else:
-				UI.selected = null
+			
 		else:
 			UI.selected = null
 
@@ -65,7 +64,7 @@ func _on_Area2D_mouse_exited():
 
 func _on_Area2D_input_event(viewport, event, shape_idx, AIpass = false):
 
-	if (battleManager.is_state("hero") and event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT and entity != null and entity.active and !delay) or AIpass:
+	if (battleManager.is_state("hero") and event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT and entity != null and !delay and $SelectedSprite.visible) or AIpass:
 		set_selected(true)
 		battleManager.changeState("SlotSelected")
 
@@ -93,7 +92,7 @@ func perform_damage(attack):
 		var newLocation = [newLocationX,newLocationY]
 		if(newLocation != location):
 			var newSlot= gridManager.get_slot(newLocation,affiliation)
-			if(is_instance_valid(newSlot)):
+			if(is_instance_valid(newSlot) and !is_instance_valid(newSlot.entity)):
 				gridManager.transfer_entity(self,newSlot)
 	
 func _on_state_changed_triggered():

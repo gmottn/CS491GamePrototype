@@ -67,6 +67,8 @@ func _on_Area2D_input_event(viewport, event, shape_idx,AIpass = false):
 	if (event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT and $Sprite.visible  and depth == attack.depth) or AIpass:
 		selected = true
 		if(targets.size() != 0):
+			if(depth == 1):
+				attack.firstClick = self
 			attack.update_depth(1)
 		else:
 			attack.update_depth((attack.maxDepth+1)-attack.depth)
@@ -117,6 +119,7 @@ func perform_attack():
 				print(target)
 				print("which is type...")
 				print(target.type)
+				print(target.type)
 				print("test")
 			target.perform_attack()
 func create_splash_targets():
@@ -125,4 +128,7 @@ func create_splash_targets():
 			var targetType = ""
 			if(depth >= attack.maxDepth):
 				targetType = "Unselectable"
-			targets = gridManager.create_targets(splashSlots,attack,targetType,depth+1)
+				if(attack.finalCount):
+					targets = gridManager.create_targets(splashSlots,attack,targetType,depth+1)
+			else:
+				targets = gridManager.create_targets(splashSlots,attack,targetType,depth+1)

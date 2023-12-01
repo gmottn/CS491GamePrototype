@@ -14,11 +14,14 @@ func _ready():
 	#define these per attack
 	targetSpots = []
 	splashSpots = []
-	damage = 10 # base damage
+	damage = 1  # base damage
 	statusEffects = []
-	splashDegredation = 0.8
-	maxDepth = 1	
-	mpCost = 0
+	splashDegredation = 1
+	maxDepth = 0
+	mpCost = 5
+	description = "Flood your enemies and knock them all back"
+	subDescription = "Hits all enemies"
+	knockback = [1,0]
 	#leave these alone
 
 	initialize_attack()

@@ -39,15 +39,13 @@ func get_grids():
 #builds the background floor of the battle
 func build_background():
 	var texture = preload("res://Battles/GridManager/GridSprites/sPlaceHolderBattleFiller.PNG")
+	tileStartY = (tileSize /2) + tileSize * 2
+	tileStartX = ((tileSize /2) + tileSize * 2) * -1
 	for column in range(floorHeight/2):
 		for row in range(floorWidth/2):
 			var floorSprite = Sprite.new()
 			floorSprite.texture = texture
 			floorSprite.position = Vector2(tileStartX + (tileSize * row), tileStartY + (tileSize * column))
-			add_child(floorSprite)
-			floorSprite = Sprite.new()
-			floorSprite.texture = texture
-			floorSprite.position = Vector2(tileStartX + (tileSize * row * -1), tileStartY + (tileSize * column))
 			add_child(floorSprite)
 func transition_to_overworld():
 	update_stats()

@@ -12,14 +12,15 @@ extends "res://Battles/Attacks/AttackScripts/AttackBase.gd"
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#define these per attack
-	targetSpots = [[0,0],[1,0],[-1,0],[0,1],[0,-1]]
-	splashSpots = [[-1,0],[0,1]]
-	damage = 10 # base damage
+	targetSpots = []
+	splashSpots = []
+	damage = 50 # base damage
 	statusEffects = []
-	splashDegredation = 1
-	maxDepth = 0
-	mpCost = 10
-	
+	splashDegredation = 0.75
+	maxDepth = 1
+	mpCost = 0
+	description = "Unstable Magic, chance to heal target"
+	subDescription = "Hits single target with large splash"
 	#leave these alone
 
 	initialize_attack()
@@ -29,10 +30,13 @@ func _ready():
 
 
 func attack_code(gridSlot): # overide
+	if (randi()%100) > 50:
+		damage *= -1
 	gridSlot.perform_damage(self)
 
 func target_code():
-	set_position_dependent_targets()
+	set_all_targets()
 
 
+#lave this function alone
 

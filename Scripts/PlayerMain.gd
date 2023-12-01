@@ -36,8 +36,7 @@ func _input(event):
 	if event is InputEventKey:
 		if(event.is_pressed() and event.scancode == KEY_R):
 			get_tree().reload_current_scene()
-		if(event.is_pressed() and event.scancode == KEY_E):
-			get_parent().get_node("Chest").player_interact()
+		
 func _process(delta):
 	
 	direction = Vector3()

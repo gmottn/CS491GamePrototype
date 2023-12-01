@@ -12,29 +12,30 @@ extends "res://Battles/Attacks/AttackScripts/AttackBase.gd"
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#define these per attack
-	targetSpots = [[2,1],[-2,1],[2,-1],[-2,-1]]
+	targetSpots = []
 	splashSpots = []
-	damage = 1002 # base damage
+	damage = 0 # base damage
 	statusEffects = []
 	splashDegredation = 1
-	maxDepth = 1
+	maxDepth = 0
+	mpCost = 10
+	description = "Increases defense by 5 for rest of the fight"
+	subDescription = ""
 	
 	#leave these alone
-	
+
 	initialize_attack()
 	# Replace with function body.
 
 
-
-
+	
 func attack_code(gridSlot): # overide
-	gridManager.transfer_entity(caster.gridSlot,gridSlot)
+	caster.defense += 5
+
 func target_code():
-	set_position_dependent_targets(false)
+	targetSpots = [caster.gridSlot.location]
+	set_specific_targets(false)
 
 
 #lave this function alone
 
-func create_targets(targetSlots):
-	var targetType = "Move"
-	targets = gridManager.create_targets(targetSlots,self,targetType,1)
