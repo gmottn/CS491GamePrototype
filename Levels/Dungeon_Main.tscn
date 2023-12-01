@@ -53,12 +53,6 @@ transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0
 inventory_data = ExtResource( 6 )
 equipment_data = SubResource( 5 )
 
-[node name="RayCast" type="RayCast" parent="Player"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.878238, 0 )
-enabled = true
-cast_to = Vector3( 0, 0, -20 )
-collision_mask = 4
-
 [node name="GridMap" type="GridMap" parent="."]
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -16, 0 )
 mesh_library = ExtResource( 1 )
