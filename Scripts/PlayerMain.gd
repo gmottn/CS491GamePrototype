@@ -4,7 +4,8 @@ signal toggle_inventory
 
 export var inventory_data : Resource
 export var equipment_data : Resource
-onready var ray_cast = $RayCast
+onready var ray_cast = $Head/Camera/RayCast
+
 onready var camera : Camera = $Head/Camera
 
 # Player class, Ahmed Faisal september 27th
