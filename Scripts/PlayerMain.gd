@@ -33,18 +33,21 @@ func _input(event):
 		head.rotate_x(deg2rad(-event.relative.y * mouse_sensitivity))
 		
 		head.rotation.x = clamp(head.rotation.x, deg2rad(-85),deg2rad(70))
-		
-	
+	if event is InputEventKey:
+		if(event.is_pressed() and event.scancode == KEY_R):
+			get_tree().reload_current_scene()
+
 func _process(delta):
 	
 	direction = Vector3()
-	
+	#print(translation)
 	if not is_on_floor():
 		fall.y -= gravity * delta
 	
-	if Input.is_action_pressed("player_jump"):
-		fall.y = jump
-	
+	#disable jump because its pointless
+	#if Input.is_action_pressed("player_jump"):
+	#	fall.y = jump
+
 	if Input.is_action_just_pressed("ui_cancel"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	

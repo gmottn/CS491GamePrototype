@@ -13,8 +13,8 @@ extends "res://Battles/Attacks/ItemScripts/ItemBase.gd"
 func _ready():
 	#define these per attack
 	targetSpots = []
-	splashSpots = []
-	damage = -200 # base damage
+	splashSpots = [[0,-1],[0,1],[1,1],[1,-1],[-1,1],[-1,-1],[1,0],[-1,0]]
+	damage = 100 # base damage
 	statusEffects = []
 	splashDegredation = 0.8
 	maxDepth = 1	
@@ -30,7 +30,7 @@ func attack_code(gridSlot): # overide
 	gridSlot.perform_damage(self)
 
 func target_code():
-	set_all_targets(false)
+	set_all_targets()
 
 
 #lave this function alone

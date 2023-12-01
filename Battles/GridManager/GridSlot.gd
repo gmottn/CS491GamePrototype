@@ -93,7 +93,8 @@ func perform_damage(attack):
 		var newLocation = [newLocationX,newLocationY]
 		if(newLocation != location):
 			var newSlot= gridManager.get_slot(newLocation,affiliation)
-			gridManager.transfer_entity(self,newSlot)
+			if(is_instance_valid(newSlot)):
+				gridManager.transfer_entity(self,newSlot)
 	
 func _on_state_changed_triggered():
 	if(battleManager.is_state("hero")):

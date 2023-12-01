@@ -19,10 +19,12 @@ var text_queue = []
 func _ready():
 	print("Starting state: State.READY")
 	hide_textbox()
-	queue_text("Testing 123")
-	queue_text("Does this work ")
-	queue_text("If you're reading this it works")
-	queue_text(" away now")
+	queue_text("Welcome to the game, double press 'enter' to continue the text")
+	queue_text("Use the 'W' key to move forward, the 'D' key to move right, the 'S' key to move backward, and the 'A' key to move left")
+	queue_text("Use the mouse to look around")
+	queue_text("Use The 'I' key to open up the Inventory/Equipment menu")
+	queue_text("Try to find enemies (White box) and treasure (red box), press 'E' key to interact with treasure")
+	queue_text("To read These messages again bump into the white small cylinder")
 
 
 func _process(delta):

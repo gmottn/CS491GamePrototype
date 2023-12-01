@@ -8,6 +8,7 @@ var player = null
 var interface = null
 var inventory = null
 var stats = null
+var check = true
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player = get_parent().get_node("Player")
@@ -29,10 +30,22 @@ func initiate_battle():
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	battleInstance.player = player
 	battleInstance.stats = stats
+	battleInstance.battleID = random_battle_ID()
 	get_tree().root.add_child(battleInstance)
 	player.set_process_input(false)
 	player.set_process(false)
 	interface.visible = false
-	get_tree().current_scene = battleInstance
-	queue_free()
 	
+	queue_free()
+func _input(event):
+
+	if event is InputEventKey:
+		if(event.is_pressed() and event.scancode == KEY_1):
+			check = false
+
+func random_battle_ID():
+	if(check):
+		return 1
+	else:
+		return 4
+	#return (randi()%4) + 1
