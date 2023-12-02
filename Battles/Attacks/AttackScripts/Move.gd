@@ -16,9 +16,10 @@ func _ready():
 	splashSpots = []
 	damage = 0 # base damage
 	statusEffects = []
-	splashDegredation = 0.8
+	splashDegredation = 1
 	maxDepth = 1
-	
+	description = "Move this hero"
+	subDescription = ""
 	#leave these alone
 
 	initialize_attack()
@@ -35,7 +36,7 @@ func target_code():
 
 #lave this function alone
 
-func create_targets(targetSlots):
+func create_targets(targetSlots, num = 1):
 	targetSlots = filter_targetSlots(targetSlots)
 	var targetType = "Move"
 	targets = gridManager.create_targets(targetSlots,self,targetType,1)

@@ -4,7 +4,8 @@ signal toggle_inventory
 
 export var inventory_data : Resource
 export var equipment_data : Resource
-onready var ray_cast = $RayCast
+onready var ray_cast = $Head/Camera/RayCast
+
 onready var camera : Camera = $Head/Camera
 
 # Player class, Ahmed Faisal september 27th
@@ -33,8 +34,10 @@ func _input(event):
 		head.rotate_x(deg2rad(-event.relative.y * mouse_sensitivity))
 		
 		head.rotation.x = clamp(head.rotation.x, deg2rad(-85),deg2rad(70))
+	if event is InputEventKey:
+		if(event.is_pressed() and event.scancode == KEY_R):
+			get_tree().reload_current_scene()
 		
-	
 func _process(delta):
 	
 	direction = Vector3()
@@ -45,7 +48,7 @@ func _process(delta):
 	#disable jump because its pointless
 	#if Input.is_action_pressed("player_jump"):
 	#	fall.y = jump
-	
+
 	if Input.is_action_just_pressed("ui_cancel"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	

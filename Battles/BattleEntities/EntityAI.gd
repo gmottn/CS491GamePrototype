@@ -53,7 +53,7 @@ func AI_continue():
 func slotselected_code():
 	var move = attached.moveAttack
 	hidden_button_hover(move.attackClickable)
-	if(move.targets.size() > 0 and (randi() % 100) >100):
+	if(move.targets.size() > 0 and (randi() % 100) >70):
 		#movement instead
 		var targetNum = randi() % move.targets.size()
 		path = [move,[targetNum]]
@@ -132,14 +132,18 @@ func get_best_path():#goes through each attack
 				relativeBest+= best_amount_of_hits(target)
 			undo_button_hover(attack.attackClickable)
 		else:
-			attack.attackClickable._on_Button_mouse_entered()
+			attack.attackClickable._on_Button_mouse_entered(true)
 			var myTarget = attack.targets[0]
-			attack.attackClickable._on_Button_pressed()
+			attack.attackClickable._on_Button_pressed(true)
 			bestPath = go_through(attack,myTarget,[])
 		
 			if(relativeBest < bestPath[0]):
 				relativeBest = bestPath[0]
 				path = bestPath[1]
+			elif(relativeBest == bestPath[0]):
+				if((randi()%100) > 50):
+					relativeBest = bestPath[0]
+					path = bestPath[1]
 		#compare attack
 		print("Best number of hits for this attack is...")
 		print(relativeBest)

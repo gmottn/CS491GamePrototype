@@ -65,8 +65,6 @@ func changeState(state):
 		turn = "hero"
 	elif(gameState == battleStates.ENEMY):
 		turn = "enemy"
-	$Label.text = str(gameState)
-	$Label.modulate = Color(1,1,1,1)
 	emit_signal("state_changed")
 
 	
@@ -78,6 +76,9 @@ func _input(event):
 				
 				if(gameState == battleStates.SLOT_SELECTED):
 					changeState("hero")
+			if event.scancode == KEY_R:
+				get_tree().reload_current_scene()
+				get_parent().queue_free()
 func is_state(checkState):
 	checkState = convert_to_state(checkState)
 	

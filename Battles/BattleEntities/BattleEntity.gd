@@ -7,7 +7,7 @@ var maxHp = 100
 var gold = 5
 var hp = maxHp
 var maxMp = 0
-var mp = maxMp
+var mp = maxMp setget set_mp
 var portrait = preload("res://Battles/BattleEntities/EntitySprites/Portraits/Knight.png")
 var AI = null
 var strength = 5
@@ -45,15 +45,16 @@ func create_attack(attackName,num):
 	return attackInstance
 func load_entity_stats():
 	get_sprite()
-	if(affiliation == "hero"):
-		var stats = battleManager.get_stats_for(entityName)
-		if(is_instance_valid(stats)):
+	var stats = battleManager.get_stats_for(entityName)
+	if(is_instance_valid(stats)):
 			strength = stats.strength + battleManager.strengthBonus
 			defense = stats.defense + battleManager.defenseBonus
 			maxHp = stats.max_health
 			maxMp = stats.max_mp
 			hp = stats.health
 			mp = stats.mp
+			attacks = stats.attacks
+			moveSpots = stats.moveSpots
 			$Sprite.modulate = stats.color
 	else:
 		attacks = ["TestAttack","Position"]
@@ -80,6 +81,8 @@ func take_damage(damage,statusEffects):
 	print(hp)
 	if(hp > maxHp):
 		hp = maxHp
+	if (hp < 0):
+		hp = 0
 	add_status_effects(statusEffects)
 	create_damage_popup(damage,statusEffects)
 	check_if_dead()
@@ -87,6 +90,7 @@ func check_if_dead():
 	
 	if hp <= 0:
 		#emit dead signal
+		$Sprite.texture = load("res://Battles/BattleEntities/EntitySprites/Tomb.png")
 		dead = true
 		if(affiliation == "enemy"):
 			battleManager.enemies.erase(self)
@@ -140,4 +144,10 @@ func configure_AI():
 	add_child(AI)
 func activate_AI():
 	AI.activate()
+func set_mp(value):
+	mp = value
+	if mp > maxMp:
+		mp = maxMp
+	elif mp < 0:
+		mp = 0
 	

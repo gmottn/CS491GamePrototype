@@ -9,19 +9,19 @@ var initialOffset = Vector2(0,-15)
 var duration = 1
 var damage = 0
 var statusEffects = []
-var white = Color(1,1,1,1)
+var color = Color(1,1,1,1)
 var green = Color(0,1,0,1)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#position  += initialOffset
 	if(typeof(damage) == TYPE_STRING):
-		$Label.modulate = white
+		$Label.modulate = color
 		$Label.text =  damage
 	else:
 		$Label.text = str(abs(damage))
 		if(damage >= 0):
-			$Label.modulate = white
+			$Label.modulate = color
 		else:
 			$Label.modulate = green
 	start_movement_and_fadeout()

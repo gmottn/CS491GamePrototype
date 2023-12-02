@@ -12,3 +12,5 @@ export var speed : int = 5
 export var luck : int = 5
 export var intelligance : int = 5
 export var color = Color(1,0,1,1)
+export var moveSpots = [[1,0],[-1,0],[0,-1],[0,1]]
+export var attacks = ["Slash", "Shield", "TripleCut", "CrossSlash"]

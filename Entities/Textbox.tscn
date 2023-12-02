@@ -29,13 +29,13 @@ margin_right = 0.215942
 margin_bottom = -6.10352e-05
 
 [node name="Panel" type="Panel" parent="TextboxContainer"]
-margin_right = 1009.0
-margin_bottom = 200.0
+margin_right = 1008.0
+margin_bottom = 199.0
 custom_styles/panel = SubResource( 1 )
 
 [node name="MarginContainer" type="MarginContainer" parent="TextboxContainer"]
-margin_right = 1009.0
-margin_bottom = 200.0
+margin_right = 1008.0
+margin_bottom = 199.0
 custom_constants/margin_right = 8
 custom_constants/margin_top = 8
 custom_constants/margin_left = 8
@@ -45,18 +45,18 @@ custom_constants/margin_bottom = 8
 visible = false
 margin_left = 8.0
 margin_top = 8.0
-margin_right = 1001.0
-margin_bottom = 192.0
+margin_right = 1000.0
+margin_bottom = 191.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TextboxContainer/MarginContainer"]
 margin_left = 8.0
 margin_top = 8.0
-margin_right = 1001.0
-margin_bottom = 192.0
+margin_right = 1000.0
+margin_bottom = 191.0
 
 [node name="Start" type="Label" parent="TextboxContainer/MarginContainer/HBoxContainer"]
 margin_right = 19.0
-margin_bottom = 2.0
+margin_bottom = 34.0
 rect_min_size = Vector2( 19, 0 )
 size_flags_vertical = 0
 custom_fonts/font = SubResource( 2 )
@@ -64,8 +64,8 @@ text = "*"
 
 [node name="Label2" type="Label" parent="TextboxContainer/MarginContainer/HBoxContainer"]
 margin_left = 23.0
-margin_right = 970.0
-margin_bottom = 184.0
+margin_right = 969.0
+margin_bottom = 183.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 2 )
@@ -74,17 +74,17 @@ autowrap = true
 clip_text = true
 
 [node name="End" type="Label" parent="TextboxContainer/MarginContainer/HBoxContainer"]
-margin_left = 974.0
-margin_top = 182.0
-margin_right = 993.0
-margin_bottom = 184.0
+margin_left = 973.0
+margin_top = 149.0
+margin_right = 992.0
+margin_bottom = 183.0
 rect_min_size = Vector2( 19, 0 )
 size_flags_vertical = 8
 custom_fonts/font = SubResource( 2 )
 text = "v"
 
 [node name="ChoiceContainer" type="VBoxContainer" parent="TextboxContainer"]
-margin_right = 1009.0
-margin_bottom = 200.0
+margin_right = 1008.0
+margin_bottom = 199.0
 
 [node name="Tween" type="Tween" parent="."]

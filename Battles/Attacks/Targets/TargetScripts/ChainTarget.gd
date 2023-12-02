@@ -14,6 +14,7 @@ var baseTarget
 func _ready():
 	var purple = Color(1,0,1,1) # Replace with function body.
 	$Sprite.modulate = purple
+	self.visible = false;
 	print("CHAIN HAS BEEN MADE")
 	
 	targetSlots.remove(0)
