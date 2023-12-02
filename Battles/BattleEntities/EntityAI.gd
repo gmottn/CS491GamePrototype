@@ -156,6 +156,11 @@ func get_best_path():#goes through each attack
 				bestAttack = attack
 				bestAttackValue = relativeBest
 				bestAttackPath = path
+			elif bestAttackValue == relativeBest:
+				if((randi()%100) > 50):
+					bestAttack = attack
+					bestAttackValue = relativeBest
+					bestAttackPath = path
 		
 		attack.update_depth(attack.depth * -1)
 	print("Best number of hits is...")
@@ -186,15 +191,19 @@ func go_through(attack,myTarget,path): #goes through all the paths
 			returnBest += best_amount_of_hits(targets[i])
 		else:
 			var check = go_through(attack,targets[i],path.duplicate())
-			if(relativeBest < check[0]):
+			if(relativeBest < check[0] or pathToReturn == path):
 				relativeBest = check[0]
 				pathToReturn = check[1]
+			elif(relativeBest == check[0]):
+				if((randi()%100) > 50):
+					relativeBest = check[0]
+					pathToReturn = check[1]
 	returnBest += relativeBest
 	attack.update_depth(-1)
 	
 	return[returnBest,pathToReturn]
 func best_amount_of_hits(myTarget):
-	if(is_instance_valid(myTarget.gridSlot.entity)):
+	if(is_instance_valid(myTarget.gridSlot.entity) and !myTarget.gridSlot.entity.dead):
 		return 1
 	else:
 		return 0

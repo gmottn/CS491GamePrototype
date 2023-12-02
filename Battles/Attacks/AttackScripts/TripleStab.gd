@@ -12,16 +12,16 @@ extends "res://Battles/Attacks/AttackScripts/AttackBase.gd"
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#define these per attack
-	targetSpots = [[0,0],[1,0],[-1,0],[0,1],[0,-1]]
-	splashSpots = [[-1,0],[0,1]]
-	damage = 20 # base damage
+	targetSpots = []
+	splashSpots = [[0,1],[1,0]]
+	damage = 5 # base damage
 	statusEffects = []
 	splashDegredation = 1
-	maxDepth = 0
+	maxDepth = 3	
 	mpCost = 10
-	description = "Rock go smash, what more you want"
-	subDescription = "position dependent attack"
-	
+	description = "Three slices, striking with pride"
+	subDescription = "choose a target to start and chooe where to slash around"
+	finalCount = false
 	#leave these alone
 
 	initialize_attack()
@@ -34,7 +34,8 @@ func attack_code(gridSlot): # overide
 	gridSlot.perform_damage(self)
 
 func target_code():
-	set_position_dependent_targets()
+	set_all_targets()
 
 
+#lave this function alone
 

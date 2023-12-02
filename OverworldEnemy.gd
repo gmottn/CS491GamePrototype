@@ -48,5 +48,5 @@ func random_battle_ID():
 	#	return 1
 	#else:
 	#	return 4
-	#return (randi()%6) + 1
-	return 9
+	return (randi()%6) + 1
+	
